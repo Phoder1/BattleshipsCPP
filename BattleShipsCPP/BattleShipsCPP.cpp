@@ -1,20 +1,42 @@
-// BattleShipsCPP.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
 #include <iostream>
+#include "GameManager.h"
+#include "BattleshipsCPP.h"
+#include "GamePlayer.h"
+#include "Windows.h"
+#include "winuser.h"
+using namespace std;
 
 int main()
 {
-    std::cout << "Hello World!\n";
+	//The game manager will handle the game itself
+	GameManager gameManager = GameManager();
+
+	//The players are created outside the game manager so if they want to play again they don't need to recreate them
+	GamePlayer player1 = GamePlayer::ConsoleCreateNewPlayer();
+	GamePlayer player2 = GamePlayer::ConsoleCreateNewPlayer();
+
+	bool wantToPlay = true;
+
+	while (wantToPlay)
+	{
+		gameManager.StartGame(player1, player2);
+
+		char answer;
+		bool validAnswer = false;
+		POINT point;
+		GetCursorPos(&point);
+
+		do {
+			SetCursorPos(point.x, point.y);
+
+			cout << endl << "Play again?" << endl;
+			cout << "Y/N";
+
+			cin >> answer;
+
+			wantToPlay = answer == 'Y' || answer == 'y';
+			validAnswer = wantToPlay || (answer == 'n' || answer == 'N');
+
+		} while (!validAnswer);
+	}
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
