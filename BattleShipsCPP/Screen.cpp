@@ -1,6 +1,9 @@
 #include "Screen.h"
+#include "Utillities.h"
 
-void Screen::Clear()
+void PlayerScreen::Print()
 {
-	system("clear");
+	//Clear console before printing the new screen
+	Console::ClearConsole();
+
 }

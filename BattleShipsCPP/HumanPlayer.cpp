@@ -1,4 +1,4 @@
-#include "HumanPlayer.h"
+#include "GamePlayer.h"
 
 HumanPlayer HumanPlayer::CreateHumanPlayer() {
 	int playerNumber = PlayerCount + 1;

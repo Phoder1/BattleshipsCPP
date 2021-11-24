@@ -17,3 +17,19 @@ public:
 	int GetPlayerNumber();
 };
 
+
+class HumanPlayer : public GamePlayer
+{
+public:
+	using GamePlayer::GamePlayer;
+	static HumanPlayer CreateHumanPlayer();
+};
+
+static const string PossibleNames[] = { "Cortana", "C-3PO", "Glados" };
+class AIPlayer : public GamePlayer
+{
+public:
+	//using GamePlayer::GamePlayer;
+	AIPlayer();
+};
+

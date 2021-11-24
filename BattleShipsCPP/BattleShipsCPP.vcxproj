@@ -142,22 +142,24 @@
   <ItemGroup>
     <ClCompile Include="AIPlayer.cpp" />
     <ClCompile Include="BattleshipsCPP.cpp" />
-    <ClCompile Include="BoardManager.cpp" />
+    <ClCompile Include="Board.cpp" />
+    <ClCompile Include="Color.cpp" />
+    <ClCompile Include="Console.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GamePlayer.cpp" />
     <ClCompile Include="HumanPlayer.cpp" />
     <ClCompile Include="Screen.cpp" />
+    <ClCompile Include="Tests.cpp" />
     <ClCompile Include="Utillities.cpp" />
+    <ClCompile Include="Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AIPlayer.h" />
     <ClInclude Include="BattleshipsCPP.h" />
-    <ClInclude Include="BoardManager.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GamePlayer.h" />
-    <ClInclude Include="HumanPlayer.h" />
     <ClInclude Include="Screen.h" />
     <ClInclude Include="Utillities.h" />
+    <ClInclude Include="Types.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
