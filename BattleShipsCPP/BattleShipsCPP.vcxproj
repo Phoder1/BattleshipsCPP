@@ -140,18 +140,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AIPlayer.cpp" />
     <ClCompile Include="BattleshipsCPP.cpp" />
     <ClCompile Include="BoardManager.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GamePlayer.cpp" />
+    <ClCompile Include="HumanPlayer.cpp" />
     <ClCompile Include="Screen.cpp" />
+    <ClCompile Include="Utillities.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AIPlayer.h" />
     <ClInclude Include="BattleshipsCPP.h" />
     <ClInclude Include="BoardManager.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GamePlayer.h" />
+    <ClInclude Include="HumanPlayer.h" />
     <ClInclude Include="Screen.h" />
+    <ClInclude Include="Utillities.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

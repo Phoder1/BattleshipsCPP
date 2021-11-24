@@ -6,13 +6,13 @@ using namespace std;
 
 class GamePlayer
 {
-private:
-	string _name;
 	int _playerNumber;
+protected:
+	GamePlayer();
+	string _name;
 public:
 	static int PlayerCount;
 	GamePlayer(string name);
-	static GamePlayer ConsoleCreateNewPlayer();
 	string GetName();
 	int GetPlayerNumber();
 };

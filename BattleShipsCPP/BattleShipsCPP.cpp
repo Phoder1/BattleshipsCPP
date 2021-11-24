@@ -4,6 +4,8 @@
 #include "GamePlayer.h"
 #include "Windows.h"
 #include "winuser.h"
+#include "HumanPlayer.h"
+#include "AIPlayer.h"
 using namespace std;
 
 int main()
@@ -12,8 +14,8 @@ int main()
 	GameManager gameManager = GameManager();
 
 	//The players are created outside the game manager so if they want to play again they don't need to recreate them
-	GamePlayer player1 = GamePlayer::ConsoleCreateNewPlayer();
-	GamePlayer player2 = GamePlayer::ConsoleCreateNewPlayer();
+	GamePlayer player1 = HumanPlayer::CreateHumanPlayer();
+	GamePlayer player2 = AIPlayer::AIPlayer();
 
 	bool wantToPlay = true;
 
