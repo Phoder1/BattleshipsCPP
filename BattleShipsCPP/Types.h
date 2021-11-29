@@ -19,11 +19,16 @@ public:
 	int X;
 	int Y;
 
+	Vector2Int operator*(int scalar);
+	Vector2Int operator/(int scalar);
+
+	Vector2Int operator*(Vector2Int vector);
+	Vector2Int operator/(Vector2Int vector);
+
 	Vector2Int operator+(Vector2Int vector);
 	Vector2Int operator-(Vector2Int vector);
 	Vector2Int Modulo(Vector2Int vector);
 
-	Vector2Int operator*(int scalar);
 
 	void Clamp(Vector2Int vectorMin, Vector2Int vectorMax);
 
@@ -100,6 +105,10 @@ public:
 };
 struct Battleship
 {
+public:
+	static const int PlayerShipsTypes;
+	static const int PlayerShipsLength[];
+	static const int PlayerShipsAmount[];
 private:
 	Vector2Int _origin;
 	Vector2Int _direction;
@@ -117,23 +126,36 @@ public:
 };
 class Board
 {
+public:
+	static const int SizeX = 10;
+	static const int SizeY = 10;
 private:
-	Vector2Int _size;
+
 	Vector2Int _position;
 	Color _color;
+	Vector2Int _size;
+	bool _hits[SizeX][SizeY];
+	bool _ships[SizeX][SizeY];
 
 	void DrawLine(char start, char line, char seperator, char end, Color color);
-	Vector2Int CharCount() { return _size * 2 + Vector2Int(1, 1); }
+	Vector2Int CharCount() { return GetSize() * 2 + Vector2Int(1, 1); }
 public:
-	Board(Vector2Int position, Vector2Int size, Color color);
+
+	Board(Color color);
+
 	Vector2Int GetSize();
+
 	Vector2Int GetPosition();
+	void SetPosition(Vector2Int position);
+
 	void DrawBoard();
 	void MoveCursorToPosition(Vector2Int position);
 	bool IsInside(Vector2Int position);
 
 	void DrawShip(Battleship ship);
 	bool IsValid(Battleship ship);
+
+	void Reset();
 };
 
 

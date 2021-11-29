@@ -30,7 +30,7 @@ public:
 	static void ClearConsole();
 	static void ClearLine(int lineNumber);
 	static void ClearCurrentLine();
-	static void PrintInMiddleOfConsole(string text);
+	static void PrintInMiddleOfConsole(string text, bool endl = false, bool endAtMiddle = false);
 	static void MoveToCursorToMiddle();
 };
 
@@ -45,12 +45,16 @@ enum class NavigationKey {
 
 class Input {
 public:
+	static bool TryParse(string input, int& output);
 	static void Pause();
-	static bool GetConfirmation();
+	static bool GetConfirmation(string question);
 	static int GetKey();
 	static int GetKeyAsync();
 	static NavigationKey GetNavigationKey();
-	static void WaitForNoKeysPressed();
+	static int GetNumber(bool consoleCenter = false);
+	static TCHAR WaitForAnyKey(string message = "");
+
+	static const string WaitAnyKeyMessage() { return  "Press any key to continue . . ."; }
 };
 
 class MathInt {

@@ -14,6 +14,16 @@ Vector2Int::Vector2Int(int x, int y)
 	Y = y;
 }
 
+Vector2Int Vector2Int::operator*(Vector2Int vector)
+{
+	return Vector2Int(X * vector.X, Y * vector.Y);
+}
+
+Vector2Int Vector2Int::operator/(Vector2Int vector)
+{
+	return Vector2Int(X / vector.X, Y / vector.Y);
+}
+
 Vector2Int Vector2Int::operator+(Vector2Int vector)
 {
 	return Vector2Int(X + vector.X, Y + vector.Y);
@@ -32,6 +42,11 @@ Vector2Int Vector2Int::Modulo(Vector2Int vector)
 Vector2Int Vector2Int::operator*(int scalar)
 {
 	return Vector2Int(X * scalar, Y * scalar);
+}
+
+Vector2Int Vector2Int::operator/(int scalar)
+{
+	return Vector2Int(X / scalar, Y / scalar);
 }
 
 void Vector2Int::Clamp(Vector2Int vectorMin, Vector2Int vectorMax)

@@ -1,37 +1,43 @@
 #include <windows.h>
 #include <iostream>
 #include <string>
+#include <sstream>
 #include "Utillities.h"
 
 using namespace std;
 
+bool Input::TryParse(string input, int& output)
+{
+	stringstream ss;
+
+	//Converts the string number to int and loops otherwise
+	ss << input;
+	ss >> output;
+
+	bool success = !ss.fail();
+	return success;
+}
+
 void Input::Pause()
 {
 	cout << endl;
-	Vector2Int currentCursorPosition = Console::GetCursorPosition();
-	string text = "Press any key to continue . . .";
-	Vector2Int startPos = Vector2Int(Console::GetConsoleSize().X / 2 - text.length() / 2, currentCursorPosition.Y);
-	Console::SetCursorPosition(startPos);
-
-	system("pause");
+	Console::PrintInMiddleOfConsole(WaitAnyKeyMessage());
+	WaitForAnyKey(WaitAnyKeyMessage());
 }
 
-bool Input::GetConfirmation()
+bool Input::GetConfirmation(string question)
 {
 	Vector2Int cursorPos = Console::GetCursorPosition();
 	while (true) {
 		Console::SetCursorPosition(cursorPos);
 
 		Console::ClearCurrentLine();
-		Console::PrintInMiddleOfConsole("Play again?");
-		cout << endl;
+		Console::PrintInMiddleOfConsole(question, true, true);
 
 		Console::ClearCurrentLine();
-		Console::PrintInMiddleOfConsole("Y/N");
-		cout << endl;
+		Console::PrintInMiddleOfConsole("Y/N", true, true);
 
 		Console::ClearCurrentLine();
-		Console::MoveToCursorToMiddle();
 
 		char answer;
 		cin >> answer;
@@ -105,17 +111,57 @@ NavigationKey Input::GetNavigationKey()
 	}
 }
 
-void Input::WaitForNoKeysPressed()
+int Input::GetNumber(bool consoleCenter)
 {
-	while (true)
-	{
-		int key = GetKeyAsync();
-		cout << key;
-		if (key == -1)
-			return;
-		cout << ".";
+	if (consoleCenter)
+		Console::MoveToCursorToMiddle();
+
+	Vector2Int cursorPos = Console::GetCursorPosition();
+	while (true) {
+		Console::SetCursorPosition(cursorPos);
+		Console::ClearCurrentLine();
+
+		string input;
+		cin >> input;
+
+		int output = 0;
+
+		if (TryParse(input, output))
+			return output;
 	}
 }
+
+//Not sure what's happening here, reference: https://www.cplusplus.com/forum/beginner/4533/
+TCHAR Input::WaitForAnyKey(string message)
+{
+	TCHAR  ch;
+	DWORD  mode;
+	DWORD  count;
+	HANDLE hstdin = GetStdHandle(STD_INPUT_HANDLE);
+
+	// Prompt the user
+	if (message != "")
+		Console::PrintInMiddleOfConsole(message);
+	//message = "Press any key to continue...";
+
+
+	// Switch to raw mode
+	GetConsoleMode(hstdin, &mode);
+	SetConsoleMode(hstdin, 0);
+
+	// Wait for the user's response
+	WaitForSingleObject(hstdin, INFINITE);
+
+	// Read the (single) key pressed
+	ReadConsole(hstdin, &ch, 1, &count, NULL);
+
+	// Restore the console to its previous state
+	SetConsoleMode(hstdin, mode);
+
+	// Return the key code
+	return ch;
+}
+
 
 int MathInt::Modulo(int a, int b) {
 	int r = a % b;

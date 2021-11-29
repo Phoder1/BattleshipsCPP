@@ -117,13 +117,12 @@ void Tests::DeleteTest() {
 	//GarbageCollector::ReleaseArray(f, fSize);
 }
 void Tests::BoardInputTest() {
-	Board _board = Board(Vector2Int(0, 0), Vector2Int(5, 5), Color::Red());
+	Board _board = Board(Color::Red());
 	_board.DrawBoard();
 
 	Vector2Int position = Vector2Int::Zero();
 	bool selecting = true;
 
-	Input::WaitForNoKeysPressed();
 	while (selecting)
 	{
 		_board.MoveCursorToPosition(position);

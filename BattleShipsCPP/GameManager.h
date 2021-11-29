@@ -6,6 +6,6 @@ public:
 	/// <summary>
 	/// Starts the game
 	/// </summary>
-	void StartGame(GamePlayer player1, GamePlayer player2);
+	void StartGame(GamePlayer* player1, GamePlayer* player2);
 };
 

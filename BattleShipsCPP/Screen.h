@@ -22,7 +22,7 @@ public:
 };
 class PlayerScreen : public Screen {
 public:
-	PlayerScreen(GamePlayer player);
+	PlayerScreen(GamePlayer *player);
 	 void Screen::Print() override;
 };
 

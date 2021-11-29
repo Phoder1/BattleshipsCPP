@@ -78,7 +78,7 @@ void Console::ClearCurrentLine()
 	ClearLine(GetCursorPosition().Y);
 }
 
-void Console::PrintInMiddleOfConsole(string text)
+void Console::PrintInMiddleOfConsole(string text, bool endLine, bool endAtMiddle)
 {
 	Vector2Int currentCursorPosition = GetCursorPosition();
 	Vector2Int startPos = Vector2Int(GetConsoleSize().X / 2 - text.length() / 2, currentCursorPosition.Y);
@@ -86,6 +86,12 @@ void Console::PrintInMiddleOfConsole(string text)
 	cout << text;
 
 	SetCursorPosition(currentCursorPosition);
+
+	if (endLine)
+		cout << endl;
+
+	if (endAtMiddle)
+		MoveToCursorToMiddle();
 }
 
 void Console::MoveToCursorToMiddle()

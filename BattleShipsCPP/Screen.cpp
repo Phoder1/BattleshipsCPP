@@ -11,7 +11,7 @@ void GenericScreen::Print() {
 
 }
 
-PlayerScreen::PlayerScreen(GamePlayer player)
+PlayerScreen::PlayerScreen(GamePlayer *player)
 {
 }
 

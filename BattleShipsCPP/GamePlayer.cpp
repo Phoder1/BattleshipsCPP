@@ -4,18 +4,13 @@
 
 using namespace std;
 
-GamePlayer::GamePlayer()
-{
-	_name = "No name assigned";
-	PlayerCount++;
-	_playerNumber = PlayerCount;
-}
-
-GamePlayer::GamePlayer(string name)
+GamePlayer::GamePlayer(string name, Board *board)
 {
 	_name = name;
 	PlayerCount++;
 	_playerNumber = PlayerCount;
+	_playerBoard = board;
+	_opponent = nullptr;
 }
 
 string GamePlayer::GetName() {
@@ -24,6 +19,11 @@ string GamePlayer::GetName() {
 
 int GamePlayer::GetPlayerNumber() {
 	return _playerNumber;
+}
+
+Board* GamePlayer::GetBoard()
+{
+	return _playerBoard;
 }
 
 int GamePlayer::PlayerCount = 0;
