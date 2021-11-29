@@ -7,3 +7,14 @@ void PlayerScreen::Print()
 	Console::ClearConsole();
 
 }
+void GenericScreen::Print() {
+
+}
+
+PlayerScreen::PlayerScreen(GamePlayer player)
+{
+}
+
+GenericScreen::GenericScreen()
+{
+}

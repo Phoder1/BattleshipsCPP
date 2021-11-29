@@ -11,12 +11,17 @@ void Tests::RunAllTest() {
 	ScreenColorPointerTest();
 	cout << endl;
 
+	cout << "Delete test:"<< endl;
+	DeleteTest();
+	cout << endl;
+
 
 	Color::ReturnToDefault();
+	Input::Pause();
 }
 void Tests::ScreenColorPointerTest() {
 	cout << "No changes" << endl;
-	PlayerScreen _screen = PlayerScreen();
+	GenericScreen _screen = GenericScreen();
 	int defaultColor = Color::DefaultColor;
 	Color::SetTextColor(*_screen.ScreenColor);
 	cout << "Hopefully no changes" << endl;
@@ -51,7 +56,6 @@ void Tests::ScreenColorPointerTest() {
 	Color::ReturnToDefault();
 	cout << "Hopefully same as first line" << endl;
 }
-
 void Tests::TestAllColors()
 {
 	Color::SetTextColor(Color::DarkBlueIndex);
@@ -98,4 +102,55 @@ void Tests::TestAllColors()
 
 	Color::ReturnToDefault();
 	cout << "ReturnedToDefault" << endl;
+}
+void Tests::DeleteTest() {
+	//int x = 5;
+	//int* y = new int(5);
+	//int fSize = 9;
+	//int* f = new int[fSize];
+
+	//for (size_t i = 0; i < fSize; i++)
+	//	f[i] = int(i * 999);
+
+	//Console::PrintInMiddleOfConsole("" + *f);
+
+	//GarbageCollector::ReleaseArray(f, fSize);
+}
+void Tests::BoardInputTest() {
+	Board _board = Board(Vector2Int(0, 0), Vector2Int(5, 5), Color::Red());
+	_board.DrawBoard();
+
+	Vector2Int position = Vector2Int::Zero();
+	bool selecting = true;
+
+	Input::WaitForNoKeysPressed();
+	while (selecting)
+	{
+		_board.MoveCursorToPosition(position);
+
+		switch (Input::GetNavigationKey())
+		{
+		case NavigationKey::Up:
+			//We need to reduce Up and down because the Console positive Y is down
+			position = position - Vector2Int::Up();
+			break;
+		case NavigationKey::Down:
+			position = position - Vector2Int::Down();
+			break;
+		case NavigationKey::Left:
+			position = position + Vector2Int::Left();
+			break;
+		case NavigationKey::Right:
+			position = position + Vector2Int::Right();
+			break;
+		case NavigationKey::Confirm:
+			cout << "*";
+			break;
+		case NavigationKey::Back:
+			selecting = false;
+			break;
+		}
+
+		position = position.Modulo(_board.GetSize());
+	}
 }

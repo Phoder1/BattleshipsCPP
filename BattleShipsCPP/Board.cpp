@@ -62,5 +62,39 @@ void Board::DrawBoard()
 
 void Board::MoveCursorToPosition(Vector2Int position)
 {
-	position = Vector2Int::Min(position, _size);
+	position = position.Modulo(_size);
+	Vector2Int newCursorPosition = _position + position * 2 + Vector2Int(1, 1);
+	Console::SetCursorPosition(newCursorPosition);
+}
+
+void Board::DrawShip(Battleship ship)
+{
+	bool isValid = IsValid(ship);
+	for (size_t i = 0; i < ship.GetLength(); i++)
+	{
+		Vector2Int position = ship.GetOrigin() + ship.GetDirection() * i;
+		MoveCursorToPosition(position);
+
+		if (isValid)
+			Color::SetTextColor(Color::GreenIndex);
+		else
+			Color::SetTextColor(Color::RedIndex);
+
+		cout << '*';
+	}
+}
+bool Board::IsValid(Battleship ship)
+{
+	for (size_t i = 0; i < ship.GetLength(); i++)
+	{
+		Vector2Int position = ship.GetOrigin() + ship.GetDirection() * i;
+		if (!IsInside(position))
+			return false;
+	}
+	return true;
+}
+
+bool Board::IsInside(Vector2Int position)
+{
+	return position.X >= 0 && position.Y >= 0 && position.X < _size.X && position.Y < _size.Y;
 }

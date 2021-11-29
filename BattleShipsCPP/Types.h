@@ -1,6 +1,16 @@
 #pragma once
 #include <Windows.h>
 
+enum class EightDirection {
+	Up,
+	Down,
+	Left,
+	right,
+	UpLeft,
+	UpRight,
+	DownLeft,
+	DownRight
+};
 struct Vector2Int
 {
 public:
@@ -10,13 +20,26 @@ public:
 	int Y;
 
 	Vector2Int operator+(Vector2Int vector);
+	Vector2Int operator-(Vector2Int vector);
+	Vector2Int Modulo(Vector2Int vector);
 
 	Vector2Int operator*(int scalar);
 
+	void Clamp(Vector2Int vectorMin, Vector2Int vectorMax);
+
+	static const Vector2Int GetDirection(EightDirection direction);
+	static const EightDirection Rotate45(EightDirection direction, bool clockwise);
+	static const EightDirection Rotate90(EightDirection direction, bool clockwise);
+
 	static const Vector2Int Zero() { return Vector2Int(0, 0); }
+	static const Vector2Int One() { return Vector2Int(1, 1); }
+	static const Vector2Int Up() { return Vector2Int(0, 1); }
+	static const Vector2Int Down() { return Vector2Int(0, -1); }
+	static const Vector2Int Left() { return Vector2Int(-1, 0); }
+	static const Vector2Int Right() { return Vector2Int(1, 0); }
+
 	static Vector2Int Min(Vector2Int vector, Vector2Int maxVector);
 };
-
 struct Color
 {
 private:
@@ -75,7 +98,23 @@ public:
 	static const Color Yellow() { return Color(Color::YellowIndex); }
 	static const Color White() { return Color(Color::WhiteIndex); }
 };
+struct Battleship
+{
+private:
+	Vector2Int _origin;
+	Vector2Int _direction;
+	int _length;
+public:
+	Battleship(Vector2Int origin, Vector2Int direction, int length);
 
+	Vector2Int GetOrigin();
+	Vector2Int GetDirection();
+	int GetLength();
+
+	void SetOrigin(Vector2Int origin);
+	void SetDirection(Vector2Int direction);
+	void SetLength(int length);
+};
 class Board
 {
 private:
@@ -91,5 +130,10 @@ public:
 	Vector2Int GetPosition();
 	void DrawBoard();
 	void MoveCursorToPosition(Vector2Int position);
+	bool IsInside(Vector2Int position);
+
+	void DrawShip(Battleship ship);
+	bool IsValid(Battleship ship);
 };
+
 

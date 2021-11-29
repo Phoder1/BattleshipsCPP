@@ -11,6 +11,8 @@ public:
 	static void RunAllTest();
 	static void ScreenColorPointerTest();
 	static void TestAllColors();
+	static void DeleteTest();
+	void BoardInputTest();
 };
 
 class Console
@@ -32,9 +34,43 @@ public:
 	static void MoveToCursorToMiddle();
 };
 
+enum class NavigationKey {
+	Up,
+	Down,
+	Left,
+	Right,
+	Confirm,
+	Back
+};
+
 class Input {
 public:
 	static void Pause();
 	static bool GetConfirmation();
+	static int GetKey();
+	static int GetKeyAsync();
+	static NavigationKey GetNavigationKey();
+	static void WaitForNoKeysPressed();
 };
 
+class MathInt {
+public:
+	static int Modulo(int a, int b);
+};
+
+//class GarbageCollector {
+//public:
+//	template <typename T>
+//	static void ReleaseArray(T* arr, int size);
+//};
+
+//template<typename T>
+//inline void GarbageCollector::ReleaseArray(T* arr, int size)
+//{
+//	for (size_t i = 0; i < size; i++)
+//	{
+//		delete(&arr[i]);
+//	}
+//	delete(&arr);
+//	delete(arr);
+//}

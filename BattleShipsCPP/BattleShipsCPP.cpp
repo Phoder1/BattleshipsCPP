@@ -11,9 +11,6 @@ using namespace std;
 
 int main()
 {
-	Board _board = Board(Vector2Int(20,20), Vector2Int(5, 5), Color::Red());
-	_board.DrawBoard();
-	Input::Pause();
 	//Tests::RunAllTest();
 
 	//The game manager will handle the game itself
@@ -25,29 +22,10 @@ int main()
 
 	bool wantToPlay = true;
 
-	while (wantToPlay)
-	{
+	do{
+		Console::ClearConsole();
 		gameManager.StartGame(player1, player2);
-
-		char answer;
-		bool validAnswer = false;
-		Vector2Int cursorPos = Console::GetCursorPosition();
-
-		do {
-			Console::SetCursorPosition(cursorPos);
-			Input::Pause();
-
-			Console::ClearConsole();
-			Console::PrintInMiddleOfConsole("Play again?");
-			cout << endl;
-			Console::PrintInMiddleOfConsole("Y/N");
-			Console::ClearCurrentLine();
-			Console::MoveToCursorToMiddle();
-			cin >> answer;
-
-			wantToPlay = answer == 'Y' || answer == 'y';
-			validAnswer = wantToPlay || (answer == 'n' || answer == 'N');
-
-		} while (!validAnswer);
-	}
+		Input::Pause();
+		Console::ClearConsole();
+	} while (Input::GetConfirmation());
 }

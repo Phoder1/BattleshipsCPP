@@ -141,6 +141,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AIPlayer.cpp" />
+    <ClCompile Include="Battleship.cpp" />
     <ClCompile Include="BattleshipsCPP.cpp" />
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="Color.cpp" />
