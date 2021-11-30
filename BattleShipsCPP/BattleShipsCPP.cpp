@@ -11,8 +11,6 @@ using namespace std;
 
 int main()
 {
-	//Tests::RunAllTest();
-
 	//The game manager will handle the game itself
 	GameManager gameManager = GameManager();
 
@@ -22,11 +20,16 @@ int main()
 
 	do {
 		//Start the game
-		gameManager.StartGame(player1, player2);
+		GamePlayer* winningPlayer = gameManager.PlayGame(player1, player2);
+
+		Console::PrintInMiddleOfConsole(winningPlayer->GetName() + " has won!!", true, true);
 
 		//Ask if he wants to keep playing
 	} while (Input::GetConfirmation("Play again?"));
 
-	delete(player1);
-	delete(player2);
+	if (player1 != nullptr)
+		delete(player1);
+
+	if (player2 != nullptr)
+		delete(player2);
 }

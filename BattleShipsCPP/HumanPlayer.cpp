@@ -15,14 +15,10 @@ HumanPlayer* HumanPlayer::CreateHumanPlayer(Board *board) {
 	return player;
 }
 
-void HumanPlayer::StartGame(GamePlayer* opponent)
-{
-	Console::ClearConsole();
-
-	Console::PrintInMiddleOfConsole("Place ships!");
-
-	Input::Pause();
-}
 void HumanPlayer::FillBattleshipsBoard() {
+
+}
+
+void HumanPlayer::PlayTurn() {
 
 }

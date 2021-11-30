@@ -168,6 +168,7 @@ public:
 
 	void DrawShip(Battleship ship);
 	bool IsValid(Battleship ship);
+	bool IsFullHits();
 
 	void Reset();
 

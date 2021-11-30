@@ -9,6 +9,15 @@ Board::Board() {
 	_size = GetSize();
 	_position = Vector2Int::Zero();
 }
+bool Board::IsFullHits()
+{
+	for (size_t x = 0; x < SizeX; x++)
+		for (size_t y = 0; y < SizeY; y++)
+			if (!_tiles[x, y]->GetHit())
+				return false;
+	
+	return true;
+}
 Board::Board(Color color)
 {
 	Reset();

@@ -14,16 +14,19 @@ protected:
 	Board *_playerBoard;
 	GamePlayer *_opponent;
 public:
+	static int PlayerCount;
+
 	GamePlayer(string name, Board *board);
 
-	virtual void StartGame(GamePlayer* opponent) = 0;
 	virtual void FillBattleshipsBoard() = 0;
+	virtual void PlayTurn() = 0;
 
+	int GetPlayerNumber();
+	string GetName();
 	Board* GetBoard();
 
-	static int PlayerCount;
-	string GetName();
-	int GetPlayerNumber();
+	virtual void Reset();
+	void StartGame(GamePlayer* opponent);
 
 	~GamePlayer();
 };
@@ -34,8 +37,8 @@ class HumanPlayer : public GamePlayer
 public:
 	using GamePlayer::GamePlayer;
 
-	void GamePlayer::StartGame(GamePlayer* opponent) override;
 	void GamePlayer::FillBattleshipsBoard() override;
+	void GamePlayer::PlayTurn() override;
 
 	static HumanPlayer* CreateHumanPlayer(Board* board);
 };
@@ -46,8 +49,8 @@ class AIPlayer : public GamePlayer
 public:
 	using GamePlayer::GamePlayer;
 
-	void GamePlayer::StartGame(GamePlayer* opponent) override;
 	void GamePlayer::FillBattleshipsBoard() override;
+	void GamePlayer::PlayTurn() override;
 
 	static AIPlayer* CreateAIPlayer(Board* board);
 
