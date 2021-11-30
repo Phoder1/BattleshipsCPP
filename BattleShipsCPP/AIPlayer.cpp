@@ -1,7 +1,7 @@
 #include <stdlib.h>
+#include "Types.h"
 #include "Utillities.h"
 #include "GamePlayer.h"
-#include "Types.h"
 
 using namespace std;
 

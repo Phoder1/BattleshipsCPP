@@ -1,7 +1,21 @@
-﻿#include "Utillities.h"
-#include <iostream>
+﻿#include <iostream>
 #include "Types.h"
+#include "Utillities.h"
 using namespace std;
+
+Board::Board() {
+	Reset();
+	_color = Color::DefaultColor;
+	_size = GetSize();
+	_position = Vector2Int::Zero();
+}
+Board::Board(Color color)
+{
+	Reset();
+	_color = color;
+	_size = GetSize();
+	_position = Vector2Int::Zero();
+}
 
 void Board::DrawLine(char start, char line, char seperator, char end, Color color)
 {
@@ -20,20 +34,6 @@ void Board::DrawLine(char start, char line, char seperator, char end, Color colo
 			cout << line;
 	}
 	currentColor.ApplyToText();
-}
-
-Board::Board() {
-	Reset();
-	_color = Color::DefaultColor;
-	_size = GetSize();
-	_position = Vector2Int::Zero();
-}
-Board::Board(Color color)
-{
-	Reset();
-	_color = color;
-	_size = GetSize();
-	_position = Vector2Int::Zero();
 }
 
 Vector2Int Board::GetSize()

@@ -7,6 +7,7 @@ using namespace std;
 
 class GamePlayer
 {
+private:
 	int _playerNumber;
 protected:
 	string _name;
@@ -23,10 +24,6 @@ public:
 	static int PlayerCount;
 	string GetName();
 	int GetPlayerNumber();
-
-	virtual ~GamePlayer() {
-		delete(_playerBoard);
-	}
 };
 
 
