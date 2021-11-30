@@ -13,6 +13,7 @@ AIPlayer* AIPlayer::CreateAIPlayer(Board* board)
 	int nameIndex = rand() % namesCount;
 	return new AIPlayer(PossibleNames[nameIndex], board);
 }
+
 void AIPlayer::StartGame(GamePlayer* opponent)
 {
 	Console::ClearConsole();

@@ -21,6 +21,11 @@ int GamePlayer::GetPlayerNumber() {
 	return _playerNumber;
 }
 
+GamePlayer::~GamePlayer()
+{
+	delete _playerBoard;
+}
+
 Board* GamePlayer::GetBoard()
 {
 	return _playerBoard;

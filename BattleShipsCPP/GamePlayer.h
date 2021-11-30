@@ -24,6 +24,8 @@ public:
 	static int PlayerCount;
 	string GetName();
 	int GetPlayerNumber();
+
+	~GamePlayer();
 };
 
 
@@ -48,5 +50,7 @@ public:
 	void GamePlayer::FillBattleshipsBoard() override;
 
 	static AIPlayer* CreateAIPlayer(Board* board);
+
+
 };
 

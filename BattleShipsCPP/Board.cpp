@@ -113,6 +113,10 @@ void Board::Reset()
 			_tiles[x, y]->Reset();
 }
 
+Board::~Board()
+{
+}
+
 bool Board::IsInside(Vector2Int position)
 {
 	return position.X >= 0 && position.Y >= 0 && position.X < _size.X&& position.Y < _size.Y;
