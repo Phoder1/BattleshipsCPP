@@ -5,11 +5,11 @@
 
 using namespace std;
 
-int Color::DefaultColor = 15;
+Color Color::DefaultColor = Color(15);
 
 Color::Color()
 {
-	_color = DefaultColor;
+	_color = DefaultColor.GetColor();
 }
 
 Color::Color(int color)
@@ -19,12 +19,12 @@ Color::Color(int color)
 
 void Color::SetDefaultColor(int color)
 {
-	DefaultColor = color;
+	DefaultColor._color = color;
 }
 
 void Color::SetDefaultColor(Color color)
 {
-	DefaultColor = color.GetColor();
+	DefaultColor = color;
 }
 
 int Color::GetColor()

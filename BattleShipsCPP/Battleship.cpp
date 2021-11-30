@@ -8,7 +8,6 @@ Battleship::Battleship(Vector2Int origin, Vector2Int direction, int length) {
 	_direction = direction;
 	_length = length;
 }
-
 Vector2Int Battleship::GetOrigin() {
 	return _origin;
 }

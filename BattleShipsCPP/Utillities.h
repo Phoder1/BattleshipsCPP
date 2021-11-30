@@ -9,9 +9,7 @@ class Tests
 {
 public:
 	static void RunAllTest();
-	static void ScreenColorPointerTest();
 	static void TestAllColors();
-	static void DeleteTest();
 	void BoardInputTest();
 };
 

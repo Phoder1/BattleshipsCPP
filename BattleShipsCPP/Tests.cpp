@@ -1,60 +1,14 @@
+#include <iostream>
 #include "Utillities.h"
 #include "Types.h"
-#include "Screen.h"
 
 void Tests::RunAllTest() {
 	cout << "Test all colors:" << endl;
 	TestAllColors();
 	cout << endl;
 
-	cout << "Screen color test:" << endl;
-	ScreenColorPointerTest();
-	cout << endl;
-
-	cout << "Delete test:"<< endl;
-	DeleteTest();
-	cout << endl;
-
-
 	Color::ReturnToDefault();
 	Input::Pause();
-}
-void Tests::ScreenColorPointerTest() {
-	cout << "No changes" << endl;
-	GenericScreen _screen = GenericScreen();
-	int defaultColor = Color::DefaultColor;
-	Color::SetTextColor(*_screen.ScreenColor);
-	cout << "Hopefully no changes" << endl;
-
-	Color::SetDefaultColor(Color::Red());
-	Color::SetTextColor(*_screen.ScreenColor);
-	cout << "Hopefully there's changes" << endl;
-	Color::ReturnToDefault();
-	cout << "Hopefully same as last line" << endl;
-
-	Color::SetDefaultColor(Color::Blue());
-	Color::SetTextColor(*_screen.ScreenColor);
-	cout << "Hopefully there's changes" << endl;
-	Color::ReturnToDefault();
-	cout << "Hopefully same as last line" << endl;
-
-	Color::SetDefaultColor(Color::Green());
-	Color::SetTextColor(*_screen.ScreenColor);
-	cout << "Hopefully there's changes" << endl;
-	Color::ReturnToDefault();
-	cout << "Hopefully same as last line" << endl;
-
-	int newColor = Color::YellowIndex;
-	_screen.ScreenColor = &newColor;
-
-	Color::SetTextColor(*_screen.ScreenColor);
-	cout << "Hopefully different from next line" << endl;
-	Color::ReturnToDefault();
-	cout << "is it?" << endl;
-
-	Color::SetDefaultColor(defaultColor);
-	Color::ReturnToDefault();
-	cout << "Hopefully same as first line" << endl;
 }
 void Tests::TestAllColors()
 {
@@ -102,19 +56,6 @@ void Tests::TestAllColors()
 
 	Color::ReturnToDefault();
 	cout << "ReturnedToDefault" << endl;
-}
-void Tests::DeleteTest() {
-	//int x = 5;
-	//int* y = new int(5);
-	//int fSize = 9;
-	//int* f = new int[fSize];
-
-	//for (size_t i = 0; i < fSize; i++)
-	//	f[i] = int(i * 999);
-
-	//Console::PrintInMiddleOfConsole("" + *f);
-
-	//GarbageCollector::ReleaseArray(f, fSize);
 }
 void Tests::BoardInputTest() {
 	Board _board = Board(Color::Red());

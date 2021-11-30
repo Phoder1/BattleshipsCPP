@@ -22,6 +22,12 @@ void Board::DrawLine(char start, char line, char seperator, char end, Color colo
 	currentColor.ApplyToText();
 }
 
+Board::Board() {
+	Reset();
+	_color = Color::DefaultColor;
+	_size = GetSize();
+	_position = Vector2Int::Zero();
+}
 Board::Board(Color color)
 {
 	Reset();
@@ -103,16 +109,11 @@ bool Board::IsValid(Battleship ship)
 void Board::Reset()
 {
 	for (size_t x = 0; x < SizeX; x++)
-	{
 		for (size_t y = 0; y < SizeY; y++)
-		{
-			_hits[x][y] = false;
-			_ships[x][y] = false;
-		}
-	}
+			_tiles[x, y]->Reset();
 }
 
 bool Board::IsInside(Vector2Int position)
 {
-	return position.X >= 0 && position.Y >= 0 && position.X < _size.X && position.Y < _size.Y;
+	return position.X >= 0 && position.Y >= 0 && position.X < _size.X&& position.Y < _size.Y;
 }

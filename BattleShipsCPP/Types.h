@@ -54,7 +54,7 @@ public:
 	Color(int color);
 
 
-	static int DefaultColor;
+	static Color DefaultColor;
 
 	static void SetDefaultColor(int color);
 	static void SetDefaultColor(Color color);
@@ -124,6 +124,21 @@ public:
 	void SetDirection(Vector2Int direction);
 	void SetLength(int length);
 };
+struct BoardNode {
+private:
+	bool _hit;
+	bool _hasShip;
+public:
+	BoardNode();
+
+	bool GetHit();
+	void SetHit(bool hit);
+
+	bool GetHasShip();
+	void SetHasShip(bool hasShip);
+
+	void Reset();
+};
 class Board
 {
 public:
@@ -134,13 +149,12 @@ private:
 	Vector2Int _position;
 	Color _color;
 	Vector2Int _size;
-	bool _hits[SizeX][SizeY];
-	bool _ships[SizeX][SizeY];
+	BoardNode _tiles[SizeX][SizeY];
 
 	void DrawLine(char start, char line, char seperator, char end, Color color);
 	Vector2Int CharCount() { return GetSize() * 2 + Vector2Int(1, 1); }
 public:
-
+	Board();
 	Board(Color color);
 
 	Vector2Int GetSize();
@@ -156,6 +170,8 @@ public:
 	bool IsValid(Battleship ship);
 
 	void Reset();
+
+	~Board();
 };
 
 
