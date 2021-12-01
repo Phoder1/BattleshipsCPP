@@ -22,7 +22,11 @@ void Input::Pause()
 {
 	cout << endl;
 	Console::PrintInMiddleOfConsole(WaitAnyKeyMessage());
-	WaitForAnyKey(WaitAnyKeyMessage());
+
+	//while (true)
+	//	if (GetKey() == VK_RETURN)
+	//		break;
+	WaitForAnyKey(WaitAnyKeyMessage(), VK_RETURN);
 }
 
 bool Input::GetConfirmation(string question)
@@ -99,8 +103,8 @@ NavigationKey Input::GetNavigationKey()
 		case 0x44:
 			return NavigationKey::Right;
 
-			//Enter
-		case VK_RETURN:
+			//F
+		case 0x46:
 			return NavigationKey::Confirm;
 
 			//Backspace
@@ -138,7 +142,7 @@ int Input::GetNumber(bool consoleCenter)
 }
 
 //Not sure what's happening here, reference: https://www.cplusplus.com/forum/beginner/4533/
-TCHAR Input::WaitForAnyKey(string message)
+TCHAR Input::WaitForAnyKey(string message, int keyCode)
 {
 	TCHAR  ch;
 	DWORD  mode;
@@ -150,22 +154,25 @@ TCHAR Input::WaitForAnyKey(string message)
 		Console::PrintInMiddleOfConsole(message);
 	//message = "Press any key to continue...";
 
+	while (true)
+	{
+		// Switch to raw mode
+		GetConsoleMode(hstdin, &mode);
+		SetConsoleMode(hstdin, 0);
 
-	// Switch to raw mode
-	GetConsoleMode(hstdin, &mode);
-	SetConsoleMode(hstdin, 0);
+		// Wait for the user's response
+		WaitForSingleObject(hstdin, INFINITE);
 
-	// Wait for the user's response
-	WaitForSingleObject(hstdin, INFINITE);
+		// Read the (single) key pressed
+		ReadConsole(hstdin, &ch, 1, &count, NULL);
 
-	// Read the (single) key pressed
-	ReadConsole(hstdin, &ch, 1, &count, NULL);
+		// Restore the console to its previous state
+		SetConsoleMode(hstdin, mode);
 
-	// Restore the console to its previous state
-	SetConsoleMode(hstdin, mode);
-
-	// Return the key code
-	return ch;
+		// Return the key code
+		if (keyCode <= 0 || ch == keyCode)
+			return ch;
+	}
 }
 
 

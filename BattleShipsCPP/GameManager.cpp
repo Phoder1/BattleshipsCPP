@@ -19,6 +19,8 @@ GamePlayer* GameManager::PlayGame(GamePlayer* startingPlayer, GamePlayer* second
 	
 	Console::PrintInMiddleOfConsole(startingPlayer->GetName() + " !~VS~! " + secondPlayer->GetName(), true);
 
+	Input::Pause();
+
 	//Get players ready for the new game, and passes to each his opponent
 	startingPlayer->StartGame(secondPlayer);
 	secondPlayer->StartGame(startingPlayer);

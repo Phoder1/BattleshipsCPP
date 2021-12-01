@@ -85,7 +85,7 @@ void HumanPlayer::FillBattleshipsBoard() {
 }
 
 void HumanPlayer::PlayTurn() {
-
+	Input::Pause();
 }
 
 void HumanPlayer::ValidateCanPlayTurn() {

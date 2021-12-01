@@ -52,7 +52,7 @@ public:
 	static int GetKeyAsync();
 	static NavigationKey GetNavigationKey();
 	static int GetNumber(bool consoleCenter = false);
-	static TCHAR WaitForAnyKey(string message = "");
+	static TCHAR WaitForAnyKey(string message = "", int keyCode = -1);
 
 	static const string WaitAnyKeyMessage() { return  "Press any key to continue . . ."; }
 };

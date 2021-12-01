@@ -70,9 +70,7 @@ void Board<T>::AddShip(Battleship ship)
 	for (size_t length = 0; length < ship.GetLength(); length++)
 	{
 		Vector2Int position = ship.GetOrigin() + ship.GetDirection() * length;
-		BoardNode node = _tiles[position.X][position.Y];
-
-		node.SetHasShip(true);
+		 _tiles[position.X][position.Y].SetHasShip(true);
 	}
 }
 
@@ -134,9 +132,9 @@ void Board<T>::DrawBoard(bool visibleShips, bool visibleHits)
 			for (size_t y = 0; y < BoardSizeY; y++) {
 				MoveCursorToPosition(Vector2Int(x, y));
 
-				if (visibleShips && ((BoardNode*)_tiles[x, y])->GetHasShip())
+				if (visibleShips && _tiles[x][y].GetHasShip())
 					cout << '%';
-				if (visibleHits && ((BoardNode*)_tiles[x, y])->GetHit())
+				if (visibleHits && _tiles[x][y].GetHit())
 					cout << '*';
 			}
 	}
@@ -188,7 +186,7 @@ void Board<T>::Reset()
 {
 	for (size_t x = 0; x < BoardSizeX; x++)
 		for (size_t y = 0; y < BoardSizeY; y++)
-			_tiles[x, y]->Reset();
+			((BoardNode*)_tiles[x, y])->Reset();
 }
 
 template<typename T>
