@@ -38,7 +38,9 @@ enum class NavigationKey {
 	Left,
 	Right,
 	Confirm,
-	Back
+	Back,
+	RotateClockwise,
+	RotateCounterClockwise
 };
 
 class Input {

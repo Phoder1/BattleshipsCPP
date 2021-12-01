@@ -23,13 +23,15 @@ public:
 	Vector2Int GetPosition();
 	void SetPosition(Vector2Int position);
 
-	void DrawBoard();
+	void DrawBoard(bool visibleShips = false, bool visibleHits = false);
 	void MoveCursorToPosition(Vector2Int position);
 	bool IsInside(Vector2Int position);
 
 	void DrawShip(Battleship ship);
 	bool IsValid(Battleship ship);
 	bool IsFullHits();
+
+	void AddShip(Battleship ship);
 
 	void Reset();
 
@@ -57,6 +59,21 @@ bool Board<T>::IsFullHits()
 				return false;
 
 	return true;
+}
+
+template<typename T>
+void Board<T>::AddShip(Battleship ship)
+{
+	if (!IsValid(ship))
+		throw new runtime_error("Tried to add a ship to an illegal position!");
+
+	for (size_t length = 0; length < ship.GetLength(); length++)
+	{
+		Vector2Int position = ship.GetOrigin() + ship.GetDirection() * length;
+		BoardNode node = _tiles[position.X][position.Y];
+
+		node.SetHasShip(true);
+	}
 }
 
 template<typename T>
@@ -92,7 +109,7 @@ void Board<T>::SetPosition(Vector2Int position)
 }
 
 template<typename T>
-void Board<T>::DrawBoard()
+void Board<T>::DrawBoard(bool visibleShips, bool visibleHits)
 {
 	Console::ClearConsole();
 	Console::SetCursorY(_position.Y);
@@ -110,6 +127,18 @@ void Board<T>::DrawBoard()
 			DrawLine('|', ' ', '|', '|', _color);
 
 		cout << endl;
+	}
+
+	if (visibleHits || visibleShips) {
+		for (size_t x = 0; x < BoardSizeX; x++)
+			for (size_t y = 0; y < BoardSizeY; y++) {
+				MoveCursorToPosition(Vector2Int(x, y));
+
+				if (visibleShips && ((BoardNode*)_tiles[x, y])->GetHasShip())
+					cout << '%';
+				if (visibleHits && ((BoardNode*)_tiles[x, y])->GetHit())
+					cout << '*';
+			}
 	}
 }
 
@@ -137,6 +166,8 @@ void Board<T>::DrawShip(Battleship ship)
 
 		cout << '*';
 	}
+
+	MoveCursorToPosition(ship.GetOrigin());
 }
 
 template<typename T>
@@ -145,6 +176,7 @@ bool Board<T>::IsValid(Battleship ship)
 	for (size_t i = 0; i < ship.GetLength(); i++)
 	{
 		Vector2Int position = ship.GetOrigin() + ship.GetDirection() * i;
+
 		if (!IsInside(position))
 			return false;
 	}

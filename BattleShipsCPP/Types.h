@@ -32,7 +32,9 @@ public:
 	Vector2Int operator/(Vector2Int vector);
 
 	Vector2Int operator+(Vector2Int vector);
+	void operator+=(Vector2Int vector);
 	Vector2Int operator-(Vector2Int vector);
+	void operator-=(Vector2Int vector);
 	Vector2Int Modulo(Vector2Int vector);
 
 

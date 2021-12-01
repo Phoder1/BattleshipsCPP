@@ -18,7 +18,6 @@ protected:
 public:
 	static int PlayerCount;
 
-
 	virtual void FillBattleshipsBoard() = 0;
 	virtual void PlayTurn() = 0;
 	virtual void ValidateCanPlayTurn() = 0;
@@ -59,8 +58,13 @@ class AIPlayer : public GamePlayer
 	Board<WeightBoardNode>* _board;
 public:
 	using GamePlayer::GamePlayer;
-	AIPlayer(string name) : GamePlayer(name) {
+	AIPlayer() : GamePlayer("") {
 		_board = new Board<WeightBoardNode>();
+		srand(time(NULL));
+
+		int nameIndex = rand() % PossibleNamesCount;
+
+		_name = PossibleNames[nameIndex];
 	}
 
 	void GamePlayer::FillBattleshipsBoard() override;

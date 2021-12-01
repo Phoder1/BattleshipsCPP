@@ -107,6 +107,12 @@ NavigationKey Input::GetNavigationKey()
 		case VK_BACK:
 		case VK_ESCAPE:
 			return NavigationKey::Back;
+
+		case 0x51:
+			return NavigationKey::RotateCounterClockwise;
+
+		case 0x45:
+			return NavigationKey::RotateClockwise;
 		}
 	}
 }
