@@ -12,8 +12,12 @@ HumanPlayer* HumanPlayer::CreateHumanPlayer() {
 	cin >> name;
 	cout << endl;
 	HumanPlayer *player = new HumanPlayer(name);
-	player->_board = new Board<BoardNode>();
 	return player;
+}
+
+HumanPlayer::~HumanPlayer()
+{
+	delete(_board);
 }
 
 void HumanPlayer::FillBattleshipsBoard() {

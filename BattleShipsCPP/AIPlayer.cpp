@@ -25,3 +25,7 @@ void AIPlayer::PlayTurn() {
 void AIPlayer::ValidateCanPlayTurn() {
 
 }
+AIPlayer::~AIPlayer()
+{
+	delete(_board);
+}

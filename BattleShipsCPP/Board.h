@@ -42,7 +42,7 @@ const Vector2Int Board<T>::Size = Vector2Int(BoardSizeX, BoardSizeY);
 template<typename T>
 const Vector2Int Board<T>::CharCount = Vector2Int(BoardSizeX * 2 + 1, BoardSizeY * 2 + 1);
 template<typename T>
-Board<T>::Board<T>() {
+Board<T>::Board() {
 	Reset();
 	_color = Color::DefaultColor;
 	_position = Vector2Int::Zero();

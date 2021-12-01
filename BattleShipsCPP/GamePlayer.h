@@ -14,10 +14,10 @@ private:
 protected:
 	string _name;
 	GamePlayer* _opponent;
+	GamePlayer(string name);
 public:
 	static int PlayerCount;
 
-	GamePlayer(string name);
 
 	virtual void FillBattleshipsBoard() = 0;
 	virtual void PlayTurn() = 0;
@@ -40,25 +40,35 @@ private:
 	Board<BoardNode>* _board;
 public:
 	using GamePlayer::GamePlayer;
-
+	HumanPlayer(string name) : GamePlayer(name) {
+		_board = new Board<BoardNode>();
+	}
 	void GamePlayer::FillBattleshipsBoard() override;
 	void GamePlayer::PlayTurn() override;
 	void GamePlayer::ValidateCanPlayTurn() override;
 
 	static HumanPlayer* CreateHumanPlayer();
+
+	~HumanPlayer();
 };
 
 class AIPlayer : public GamePlayer
 {
 	static const int PossibleNamesCount;
 	static const string PossibleNames[];
+	Board<WeightBoardNode>* _board;
 public:
 	using GamePlayer::GamePlayer;
+	AIPlayer(string name) : GamePlayer(name) {
+		_board = new Board<WeightBoardNode>();
+	}
 
 	void GamePlayer::FillBattleshipsBoard() override;
 	void GamePlayer::PlayTurn() override;
 	void GamePlayer::ValidateCanPlayTurn() override;
 
 	static AIPlayer* CreateAIPlayer();
+
+	~AIPlayer();
 };
 

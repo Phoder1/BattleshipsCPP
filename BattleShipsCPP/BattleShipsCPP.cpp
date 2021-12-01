@@ -11,7 +11,7 @@ using namespace std;
 
 int main()
 {
-	Tests::BoardInputTest();
+	//Tests::BoardInputTest();
 
 	//The game manager will handle the game itself
 	GameManager gameManager = GameManager();
