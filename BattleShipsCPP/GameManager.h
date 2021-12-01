@@ -6,8 +6,10 @@
 class GameManager
 {
 private:
+	static const int MaxTurnsCount;
 	GamePlayer* _startingPlayer;
 	GamePlayer* _secondPlayer;
+	int _turnNumber = 0;
 public:
 	/// <summary>
 	/// Starts the game

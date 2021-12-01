@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Utillities.h"
 #include "Types.h"
+#include "Board.h"
 
 void Tests::RunAllTest() {
 	cout << "Test all colors:" << endl;
@@ -58,15 +59,15 @@ void Tests::TestAllColors()
 	cout << "ReturnedToDefault" << endl;
 }
 void Tests::BoardInputTest() {
-	Board _board = Board(Color::Red());
-	_board.DrawBoard();
+	Board<BoardNode>* board = new Board<BoardNode>();
+	board->DrawBoard();
 
 	Vector2Int position = Vector2Int::Zero();
 	bool selecting = true;
 
 	while (selecting)
 	{
-		_board.MoveCursorToPosition(position);
+		board->MoveCursorToPosition(position);
 
 		switch (Input::GetNavigationKey())
 		{
@@ -91,6 +92,9 @@ void Tests::BoardInputTest() {
 			break;
 		}
 
-		position = position.Modulo(_board.GetSize());
+		position = position.Modulo(board->Size);
+
 	}
+	if (board != nullptr)
+		delete(board);
 }

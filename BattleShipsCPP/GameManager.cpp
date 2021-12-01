@@ -6,6 +6,7 @@
 
 using namespace std;
 
+const int GameManager::MaxTurnsCount = BoardSizeX * BoardSizeY;
 GamePlayer* GameManager::PlayGame(GamePlayer* startingPlayer, GamePlayer* secondPlayer) {
 
 	if (startingPlayer == nullptr || secondPlayer == nullptr)
@@ -48,6 +49,8 @@ GamePlayer* GameManager::StartGameLoop() {
 
 		if (ValidateIfWon(_secondPlayer))
 			return _secondPlayer;
+
+		_turnNumber++;
 	}
 }
 /// <summary>
@@ -56,12 +59,11 @@ GamePlayer* GameManager::StartGameLoop() {
 /// <returns></returns>
 void GameManager::ValidateCanPlayTurn()
 {
-	if (_startingPlayer->GetBoard()->IsFullHits())
+	if(_turnNumber >= MaxTurnsCount)
 		throw new runtime_error(_startingPlayer->GetName() + " is full!");
+		
+	_startingPlayer->ValidateCanPlayTurn();
 
-	if (_secondPlayer->GetBoard()->IsFullHits())
-		throw new runtime_error(_secondPlayer->GetName() + " is full!");
-
-	return;
+	_secondPlayer->ValidateCanPlayTurn();
 }
 

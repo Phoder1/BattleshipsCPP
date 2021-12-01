@@ -156,6 +156,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BattleshipsCPP.h" />
+    <ClInclude Include="Board.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GamePlayer.h" />
     <ClInclude Include="Utillities.h" />

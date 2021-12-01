@@ -10,7 +10,7 @@ class Tests
 public:
 	static void RunAllTest();
 	static void TestAllColors();
-	void BoardInputTest();
+	static void BoardInputTest();
 };
 
 class Console

@@ -1,21 +1,27 @@
 #include <stdlib.h>
+#include <string>
 #include "Types.h"
 #include "Utillities.h"
 #include "GamePlayer.h"
 
 using namespace std;
 
-AIPlayer* AIPlayer::CreateAIPlayer(Board* board)
+const int AIPlayer::PossibleNamesCount = 3;
+const string AIPlayer::PossibleNames[PossibleNamesCount] = { "Cortana", "C-3PO", "Glados" };
+
+AIPlayer* AIPlayer::CreateAIPlayer()
 {
 	srand(time(NULL));
 
-	size_t namesCount = size(PossibleNames);
-	int nameIndex = rand() % namesCount;
-	return new AIPlayer(PossibleNames[nameIndex], board);
+	int nameIndex = rand() % PossibleNamesCount;
+	return new AIPlayer(PossibleNames[nameIndex]);
 }
 void AIPlayer::FillBattleshipsBoard() {
 
 }
 void AIPlayer::PlayTurn() {
+
+}
+void AIPlayer::ValidateCanPlayTurn() {
 
 }

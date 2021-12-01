@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include "Types.h"
+#include "Board.h"
 
 using namespace std;
 
@@ -9,21 +10,22 @@ class GamePlayer
 {
 private:
 	int _playerNumber;
+	int _hp;
 protected:
 	string _name;
-	Board *_playerBoard;
-	GamePlayer *_opponent;
+	GamePlayer* _opponent;
 public:
 	static int PlayerCount;
 
-	GamePlayer(string name, Board *board);
+	GamePlayer(string name);
 
 	virtual void FillBattleshipsBoard() = 0;
 	virtual void PlayTurn() = 0;
+	virtual void ValidateCanPlayTurn() = 0;
 
 	int GetPlayerNumber();
 	string GetName();
-	Board* GetBoard();
+	int GetHp();
 
 	virtual void Reset();
 	void StartGame(GamePlayer* opponent);
@@ -34,26 +36,29 @@ public:
 
 class HumanPlayer : public GamePlayer
 {
+private:
+	Board<BoardNode>* _board;
 public:
 	using GamePlayer::GamePlayer;
 
 	void GamePlayer::FillBattleshipsBoard() override;
 	void GamePlayer::PlayTurn() override;
+	void GamePlayer::ValidateCanPlayTurn() override;
 
-	static HumanPlayer* CreateHumanPlayer(Board* board);
+	static HumanPlayer* CreateHumanPlayer();
 };
 
-static const string PossibleNames[] = { "Cortana", "C-3PO", "Glados" };
 class AIPlayer : public GamePlayer
 {
+	static const int PossibleNamesCount;
+	static const string PossibleNames[];
 public:
 	using GamePlayer::GamePlayer;
 
 	void GamePlayer::FillBattleshipsBoard() override;
 	void GamePlayer::PlayTurn() override;
+	void GamePlayer::ValidateCanPlayTurn() override;
 
-	static AIPlayer* CreateAIPlayer(Board* board);
-
-
+	static AIPlayer* CreateAIPlayer();
 };
 

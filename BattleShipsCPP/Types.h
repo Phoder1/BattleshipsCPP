@@ -1,5 +1,11 @@
 #pragma once
 #include <Windows.h>
+#include <type_traits>
+
+using namespace std;
+
+static const int BoardSizeX = 10;
+static const int BoardSizeY = 10;
 
 enum class EightDirection {
 	Up,
@@ -103,6 +109,7 @@ public:
 	static const Color Yellow() { return Color(Color::YellowIndex); }
 	static const Color White() { return Color(Color::WhiteIndex); }
 };
+
 struct Battleship
 {
 public:
@@ -124,7 +131,8 @@ public:
 	void SetDirection(Vector2Int direction);
 	void SetLength(int length);
 };
-struct BoardNode {
+
+class BoardNode {
 private:
 	bool _hit;
 	bool _hasShip;
@@ -139,40 +147,13 @@ public:
 
 	void Reset();
 };
-class Board
-{
-public:
-	static const int SizeX = 10;
-	static const int SizeY = 10;
+
+class WeightBoardNode : public BoardNode {
 private:
-
-	Vector2Int _position;
-	Color _color;
-	Vector2Int _size;
-	BoardNode _tiles[SizeX][SizeY];
-
-	void DrawLine(char start, char line, char seperator, char end, Color color);
-	Vector2Int CharCount() { return GetSize() * 2 + Vector2Int(1, 1); }
+	int _weight;
 public:
-	Board();
-	Board(Color color);
-
-	Vector2Int GetSize();
-
-	Vector2Int GetPosition();
-	void SetPosition(Vector2Int position);
-
-	void DrawBoard();
-	void MoveCursorToPosition(Vector2Int position);
-	bool IsInside(Vector2Int position);
-
-	void DrawShip(Battleship ship);
-	bool IsValid(Battleship ship);
-	bool IsFullHits();
-
-	void Reset();
-
-	~Board();
+	int GetWeight();
+	void SetWeight(int weight);
 };
 
 

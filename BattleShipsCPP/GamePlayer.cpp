@@ -1,17 +1,21 @@
 #include <iostream>
 #include <string>
+#include "Types.h"
 #include "Utillities.h"
 #include "GamePlayer.h"
 
 using namespace std;
 
-GamePlayer::GamePlayer(string name, Board *board)
+GamePlayer::GamePlayer(string name)
 {
 	_name = name;
 	PlayerCount++;
 	_playerNumber = PlayerCount;
-	_playerBoard = board;
 	_opponent = nullptr;
+	_hp = 0;
+
+	for (size_t i = 0; i < Battleship::PlayerShipsTypes; i++)
+		_hp += Battleship::PlayerShipsLength[i] * Battleship::PlayerShipsAmount[i];
 }
 
 void GamePlayer::StartGame(GamePlayer* opponent)
@@ -37,17 +41,15 @@ int GamePlayer::GetPlayerNumber() {
 
 void GamePlayer::Reset()
 {
-	_playerBoard->Reset();
 }
 
 GamePlayer::~GamePlayer()
 {
-	delete _playerBoard;
 }
 
-Board* GamePlayer::GetBoard()
+int GamePlayer::GetHp()
 {
-	return _playerBoard;
+	return _hp;
 }
 
 int GamePlayer::PlayerCount = 0;

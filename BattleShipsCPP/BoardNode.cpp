@@ -27,3 +27,12 @@ void BoardNode::Reset()
 	_hit = false;
 	_hasShip = false;
 }
+
+int WeightBoardNode::GetWeight() {
+	return _weight;
+}
+
+void WeightBoardNode::SetWeight(int weight)
+{
+	_weight = weight;
+}
