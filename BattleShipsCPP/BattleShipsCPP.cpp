@@ -18,7 +18,12 @@ int main()
 	//Even though you didn't use the new operator, as the name suggests the methods creates new objects
 	//So make sure to delete them
 	GamePlayer* player1 = HumanPlayer::CreateHumanPlayer();
-	GamePlayer* player2 = AIPlayer::CreateAIPlayer();
+	Color* player1Color = new Color(Color::BlueIndex);
+	player1->SetColor(player1Color);
+
+	GamePlayer* player2 = HumanPlayer::CreateHumanPlayer();
+	Color* player2Color = new Color(Color::RedIndex);
+	player2->SetColor(player2Color);
 
 	do {
 		//Start the game
@@ -30,6 +35,9 @@ int main()
 		//Ask if he wants to keep playing
 	} while (Input::GetConfirmation("Play again?"));
 
+	delete(player1Color);
 	delete(player1);
+
+	delete(player2Color);
 	delete(player2);
 }

@@ -15,16 +15,18 @@ protected:
 	string _name;
 	GamePlayer* _opponent;
 	GamePlayer(string name);
+	Color* _playerColor;
 public:
 	static int PlayerCount;
 
 	virtual void FillBattleshipsBoard() = 0;
 	virtual void PlayTurn() = 0;
-	virtual void ValidateCanPlayTurn() = 0;
 
 	int GetPlayerNumber();
 	string GetName();
 	int GetHp();
+	virtual void SetColor(Color* color);
+	Color* GetColor();
 
 	virtual void Reset();
 	void StartGame(GamePlayer* opponent);
@@ -44,9 +46,10 @@ public:
 	}
 	void GamePlayer::FillBattleshipsBoard() override;
 	void GamePlayer::PlayTurn() override;
-	void GamePlayer::ValidateCanPlayTurn() override;
 
 	static HumanPlayer* CreateHumanPlayer();
+
+	void SetColor(Color* color) override;
 
 	~HumanPlayer();
 };
@@ -69,9 +72,10 @@ public:
 
 	void GamePlayer::FillBattleshipsBoard() override;
 	void GamePlayer::PlayTurn() override;
-	void GamePlayer::ValidateCanPlayTurn() override;
+	void SetColor(Color* color) override;
 
 	static AIPlayer* CreateAIPlayer();
+
 
 	~AIPlayer();
 };

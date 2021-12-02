@@ -18,12 +18,16 @@ GamePlayer* GameManager::PlayGame(GamePlayer* startingPlayer, GamePlayer* second
 	Console::ClearConsole();
 	
 	Console::PrintInMiddleOfConsole(startingPlayer->GetName() + " !~VS~! " + secondPlayer->GetName(), true);
-
-	Input::Pause();
+	Console::PrintInMiddleOfConsole("Use WASD to move, Q/E to rotate and F to select.", true, true);
 
 	//Get players ready for the new game, and passes to each his opponent
 	startingPlayer->StartGame(secondPlayer);
+
+	ConfirmPassTurnTo(secondPlayer);
+
 	secondPlayer->StartGame(startingPlayer);
+
+	ConfirmPassTurnTo(startingPlayer);
 
 	//Start the actual game loop
 	GamePlayer* winningPlayer = StartGameLoop();
@@ -32,6 +36,11 @@ GamePlayer* GameManager::PlayGame(GamePlayer* startingPlayer, GamePlayer* second
 
 	//Return the winnig player
 	return winningPlayer;
+}
+void GameManager::ConfirmPassTurnTo(GamePlayer* player)
+{
+	Console::ClearConsole();
+	Input::WaitForAnyKey("Press Enter to pass the turn to " + player->GetName(), VK_RETURN);
 }
 bool GameManager::ValidateIfWon(GamePlayer* player)
 {
@@ -47,10 +56,14 @@ GamePlayer* GameManager::StartGameLoop() {
 		if (ValidateIfWon(_startingPlayer))
 			return _startingPlayer;
 
+		ConfirmPassTurnTo(_secondPlayer);
+
 		_secondPlayer->PlayTurn();
 
 		if (ValidateIfWon(_secondPlayer))
 			return _secondPlayer;
+
+		ConfirmPassTurnTo(_startingPlayer);
 
 		_turnNumber++;
 	}
@@ -63,9 +76,5 @@ void GameManager::ValidateCanPlayTurn()
 {
 	if(_turnNumber >= MaxTurnsCount)
 		throw new runtime_error(_startingPlayer->GetName() + " is full!");
-		
-	_startingPlayer->ValidateCanPlayTurn();
-
-	_secondPlayer->ValidateCanPlayTurn();
 }
 

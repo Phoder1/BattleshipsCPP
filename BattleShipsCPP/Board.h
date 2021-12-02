@@ -11,14 +11,17 @@ class Board
 	static_assert(std::is_base_of<BoardNode, T>::value, "type parameter of this class must derive from BoardNode");
 private:
 	Vector2Int _position;
-	Color _color;
+	Color* _color;
 	T _tiles[BoardSizeX][BoardSizeY];
 
-	void DrawLine(char start, char line, char seperator, char end, Color color);
+	void DrawLine(char start, char line, char seperator, char end);
 public:
 	static const Vector2Int Size;
 	static const Vector2Int CharCount;
-	Board();
+	Board(Color* color = nullptr);
+
+	Color* GetColor();
+	void SetColor(Color* color);
 
 	Vector2Int GetPosition();
 	void SetPosition(Vector2Int position);
@@ -44,9 +47,12 @@ const Vector2Int Board<T>::Size = Vector2Int(BoardSizeX, BoardSizeY);
 template<typename T>
 const Vector2Int Board<T>::CharCount = Vector2Int(BoardSizeX * 2 + 1, BoardSizeY * 2 + 1);
 template<typename T>
-Board<T>::Board() {
+Board<T>::Board(Color* color) {
 	Reset();
-	_color = Color::DefaultColor;
+	if (color == nullptr)
+		_color = &Color::DefaultColor;
+	else
+		_color = color;
 	_position = Vector2Int::Zero();
 }
 
@@ -75,10 +81,8 @@ void Board<T>::AddShip(Battleship ship)
 }
 
 template<typename T>
-void Board<T>::DrawLine(char start, char line, char seperator, char end, Color color)
+void Board<T>::DrawLine(char start, char line, char seperator, char end)
 {
-	Color currentColor = Color::GetCurrentConsoleColor();
-	color.ApplyToText();
 	int charCount = CharCount.X;
 	for (size_t i = 0; i < charCount; i++)
 	{
@@ -91,7 +95,6 @@ void Board<T>::DrawLine(char start, char line, char seperator, char end, Color c
 		else
 			cout << line;
 	}
-	currentColor.ApplyToText();
 }
 
 template<typename T>
@@ -105,10 +108,20 @@ void Board<T>::SetPosition(Vector2Int position)
 {
 	_position = position;
 }
+template<typename T>
+Color* Board<T>::GetColor() {
+	return _color;
+}
+template<typename T>
+void Board<T>::SetColor(Color* color) {
+	_color = color;
+}
 
 template<typename T>
 void Board<T>::DrawBoard(bool visibleShips, bool visibleHits)
 {
+	Color currentColor = Color::GetCurrentConsoleColor();
+	_color->ApplyToText();
 	Console::ClearConsole();
 	Console::SetCursorY(_position.Y);
 	int charCount = CharCount.Y;
@@ -116,13 +129,13 @@ void Board<T>::DrawBoard(bool visibleShips, bool visibleHits)
 	{
 		Console::SetCursorX(_position.X);
 		if (i == 0)
-			DrawLine('+', '-', '+', '+', _color);
+			DrawLine('+', '-', '+', '+');
 		else if (i == (charCount - 1))
-			DrawLine('+', '-', '+', '+', _color);
+			DrawLine('+', '-', '+', '+');
 		else if (i % 2 == 0)
-			DrawLine('+', '-', '+', '-', _color);
+			DrawLine('+', '-', '+', '-');
 		else
-			DrawLine('|', ' ', '|', '|', _color);
+			DrawLine('|', ' ', '|', '|');
 
 		cout << endl;
 	}
@@ -138,6 +151,8 @@ void Board<T>::DrawBoard(bool visibleShips, bool visibleHits)
 					cout << '*';
 			}
 	}
+
+	currentColor.ApplyToText();
 }
 
 template<typename T>
@@ -151,6 +166,8 @@ void Board<T>::MoveCursorToPosition(Vector2Int position)
 template<typename T>
 void Board<T>::DrawShip(Battleship ship)
 {
+	Color currentColor = Color::GetCurrentConsoleColor();
+
 	bool isValid = IsValid(ship);
 	for (size_t i = 0; i < ship.GetLength(); i++)
 	{
@@ -166,6 +183,8 @@ void Board<T>::DrawShip(Battleship ship)
 	}
 
 	MoveCursorToPosition(ship.GetOrigin());
+
+	currentColor.ApplyToText();
 }
 
 template<typename T>

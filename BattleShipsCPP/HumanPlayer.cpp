@@ -15,6 +15,12 @@ HumanPlayer* HumanPlayer::CreateHumanPlayer() {
 	return player;
 }
 
+void HumanPlayer::SetColor(Color* color)
+{
+	GamePlayer::SetColor(color);
+	_board->SetColor(color);
+}
+
 HumanPlayer::~HumanPlayer()
 {
 	delete(_board);
@@ -80,14 +86,8 @@ void HumanPlayer::FillBattleshipsBoard() {
 			_board->AddShip(ship);
 		}
 	}
-
-	Input::Pause();
 }
 
 void HumanPlayer::PlayTurn() {
 	Input::Pause();
-}
-
-void HumanPlayer::ValidateCanPlayTurn() {
-
 }

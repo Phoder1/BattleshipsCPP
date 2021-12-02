@@ -22,8 +22,10 @@ void AIPlayer::FillBattleshipsBoard() {
 void AIPlayer::PlayTurn() {
 
 }
-void AIPlayer::ValidateCanPlayTurn() {
-
+void AIPlayer::SetColor(Color* color)
+{
+	GamePlayer::SetColor(color);
+	_board->SetColor(color);
 }
 AIPlayer::~AIPlayer()
 {

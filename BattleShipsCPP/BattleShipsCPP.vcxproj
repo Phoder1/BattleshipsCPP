@@ -150,6 +150,7 @@
     <ClCompile Include="GamePlayer.cpp" />
     <ClCompile Include="HumanPlayer.cpp" />
     <ClCompile Include="BoardNode.cpp" />
+    <ClCompile Include="Screen.cpp" />
     <ClCompile Include="Tests.cpp" />
     <ClCompile Include="Utillities.cpp" />
     <ClCompile Include="Vector2.cpp" />
@@ -159,6 +160,7 @@
     <ClInclude Include="Board.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GamePlayer.h" />
+    <ClInclude Include="Screen.h" />
     <ClInclude Include="Utillities.h" />
     <ClInclude Include="Types.h" />
   </ItemGroup>
