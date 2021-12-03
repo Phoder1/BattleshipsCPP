@@ -21,13 +21,17 @@ void HumanPlayer::SetColor(Color* color)
 	_board->SetColor(color);
 }
 
+Board<BoardNode>* HumanPlayer::GetBoard() {
+	return _board;
+}
+
 HumanPlayer::~HumanPlayer()
 {
 	delete(_board);
 }
 
 void HumanPlayer::FillBattleshipsBoard() {
-	_board->SetPosition(Vector2Int(5,5));
+	_board->SetPosition(Vector2Int(Console::GetConsoleSize().X/2 - BoardSizeX/2, 5));
 	Vector2Int position = Vector2Int(BoardSizeX / 2, BoardSizeY / 2);
 	EightDirection direction = EightDirection::Up;
 
@@ -86,8 +90,73 @@ void HumanPlayer::FillBattleshipsBoard() {
 			_board->AddShip(ship);
 		}
 	}
+
+	_board->DrawBoard(true, false);
 }
 
 void HumanPlayer::PlayTurn() {
-	Input::Pause();
+	
+	Console::ClearConsole();
+
+
+
+	Vector2Int position = Vector2Int(BoardSizeX / 2, BoardSizeY / 2);
+
+	Color currentColor = Color::GetCurrentConsoleColor();
+
+	Board<BoardNode>* board = _opponent->GetBoard();
+
+	bool foundALegalPosition = false;
+	//Keep tyring until a legal position is found
+	while (!foundALegalPosition) {
+
+		//Update the new position and origin
+		position = position.Modulo(board->Size);
+
+		board->DrawBoard(true, true);
+		board->MoveCursorToPosition(position);
+
+		if (board->IsHit(position))
+			Color::SetTextColor(Color::RedIndex);
+		else
+			Color::SetTextColor(Color::GreenIndex);
+
+		cout << "O";
+
+		currentColor.ApplyToText();
+
+		NavigationKey navKey = Input::GetNavigationKey();
+		switch (navKey) {
+		case NavigationKey::Up:
+			position += Vector2Int::Down();
+			break;
+		case NavigationKey::Down:
+			position += Vector2Int::Up();
+			break;
+		case NavigationKey::Left:
+			position += Vector2Int::Left();
+			break;
+		case NavigationKey::Right:
+			position += Vector2Int::Right();
+			break;
+		case NavigationKey::Confirm:
+			if (board->IsHit(position))
+				break;
+
+			foundALegalPosition = true;
+			break;
+		}
+	}
+
+	_opponent->Hit(position);
+	board->DrawBoard(true, true);
+}
+
+void HumanPlayer::ConfirmReady() {
+	Color currentColor = Color::GetCurrentConsoleColor();
+
+	_playerColor->ApplyToText();
+	Input::WaitForAnyKey(GetName() + " press ENTER to start your turn when ready!", VK_RETURN);
+
+	currentColor.ApplyToText();
 }

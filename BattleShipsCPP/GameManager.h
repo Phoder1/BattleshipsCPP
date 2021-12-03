@@ -19,5 +19,6 @@ public:
 	bool ValidateIfWon(GamePlayer* player);
 	GamePlayer* StartGameLoop();
 	void ValidateCanPlayTurn();
+	void StartTurn(GamePlayer* currentTurnPlayer);
 };
 

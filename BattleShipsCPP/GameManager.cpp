@@ -8,9 +8,10 @@ using namespace std;
 
 const int GameManager::MaxTurnsCount = BoardSizeX * BoardSizeY;
 GamePlayer* GameManager::PlayGame(GamePlayer* startingPlayer, GamePlayer* secondPlayer) {
-
 	if (startingPlayer == nullptr || secondPlayer == nullptr)
 		throw new runtime_error("Nullptr player has been passed to the game manager!");
+
+	_turnNumber = 0;
 
 	_startingPlayer = startingPlayer;
 	_secondPlayer = secondPlayer;
@@ -18,12 +19,14 @@ GamePlayer* GameManager::PlayGame(GamePlayer* startingPlayer, GamePlayer* second
 	Console::ClearConsole();
 	
 	Console::PrintInMiddleOfConsole(startingPlayer->GetName() + " !~VS~! " + secondPlayer->GetName(), true);
+	cout << endl;
 	Console::PrintInMiddleOfConsole("Use WASD to move, Q/E to rotate and F to select.", true, true);
 
 	//Get players ready for the new game, and passes to each his opponent
 	startingPlayer->StartGame(secondPlayer);
 
 	ConfirmPassTurnTo(secondPlayer);
+
 
 	secondPlayer->StartGame(startingPlayer);
 
@@ -39,26 +42,31 @@ GamePlayer* GameManager::PlayGame(GamePlayer* startingPlayer, GamePlayer* second
 }
 void GameManager::ConfirmPassTurnTo(GamePlayer* player)
 {
-	Console::ClearConsole();
+	Console::SetCursorY(0);
 	Input::WaitForAnyKey("Press Enter to pass the turn to " + player->GetName(), VK_RETURN);
 }
 bool GameManager::ValidateIfWon(GamePlayer* player)
 {
-	return false;
+	if (_startingPlayer != player)
+		return _startingPlayer->GetHp() <= 0;
+	else
+		return _secondPlayer->GetHp() <= 0;
 }
 GamePlayer* GameManager::StartGameLoop() {
 	//While game is running - will end if a player has won in the return statements
 	while (true) {
 		ValidateCanPlayTurn();
 
-		_startingPlayer->PlayTurn();
+		//player 1 turn
+		StartTurn(_startingPlayer);
 
 		if (ValidateIfWon(_startingPlayer))
 			return _startingPlayer;
 
 		ConfirmPassTurnTo(_secondPlayer);
-
-		_secondPlayer->PlayTurn();
+		
+		//player 2 turn
+		StartTurn(_secondPlayer);
 
 		if (ValidateIfWon(_secondPlayer))
 			return _secondPlayer;
@@ -74,7 +82,18 @@ GamePlayer* GameManager::StartGameLoop() {
 /// <returns></returns>
 void GameManager::ValidateCanPlayTurn()
 {
-	if(_turnNumber >= MaxTurnsCount)
-		throw new runtime_error(_startingPlayer->GetName() + " is full!");
+	if(_startingPlayer->GetBoard()->IsFullHits() || _secondPlayer->GetBoard()->IsFullHits())
+		throw new runtime_error("Boards are completely full, error in win condition detection!");
+}
+
+void GameManager::StartTurn(GamePlayer* currentTurnPlayer)
+{
+	Console::ClearConsole();
+
+	Console::PrintInMiddleOfConsole("Turn " + to_string(_turnNumber) + "!", true);
+
+	currentTurnPlayer->ConfirmReady();
+
+	currentTurnPlayer->PlayTurn();
 }
 

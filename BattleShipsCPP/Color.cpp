@@ -17,6 +17,11 @@ Color::Color(int color)
 	_color = color;
 }
 
+Color::Color(int color, int backgroundColor)
+{
+	_color = (backgroundColor * 15 + 1) + color;
+}
+
 void Color::SetDefaultColor(int color)
 {
 	DefaultColor._color = color;

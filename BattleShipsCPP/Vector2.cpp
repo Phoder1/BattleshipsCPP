@@ -49,6 +49,18 @@ Vector2Int Vector2Int::Modulo(Vector2Int vector)
 
 	return Vector2Int(newX, newY);
 }
+Vector2Int Vector2Int::operator-()
+{
+	return Vector2Int(-X,-Y);
+}
+bool Vector2Int::operator==(Vector2Int vector)
+{
+	return X == vector.X && Y == vector.Y;
+}
+bool Vector2Int::operator!=(Vector2Int vector)
+{
+	return X != vector.X || Y != vector.Y;
+}
 Vector2Int Vector2Int::operator*(int scalar)
 {
 	return Vector2Int(X * scalar, Y * scalar);

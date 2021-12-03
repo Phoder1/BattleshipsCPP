@@ -1,11 +1,9 @@
 #pragma once
 #include <Windows.h>
 #include <type_traits>
+#include "Constants.h"
 
 using namespace std;
-
-static const int BoardSizeX = 10;
-static const int BoardSizeY = 10;
 
 enum class EightDirection {
 	Up,
@@ -35,7 +33,12 @@ public:
 	void operator+=(Vector2Int vector);
 	Vector2Int operator-(Vector2Int vector);
 	void operator-=(Vector2Int vector);
+
 	Vector2Int Modulo(Vector2Int vector);
+	Vector2Int operator-();
+
+	bool operator==(Vector2Int vector);
+	bool operator!=(Vector2Int vector);
 
 
 	void Clamp(Vector2Int vectorMin, Vector2Int vectorMax);
@@ -60,6 +63,7 @@ private:
 public:
 	Color();
 	Color(int color);
+	Color(int color, int backgroundColor);
 
 
 	static Color DefaultColor;

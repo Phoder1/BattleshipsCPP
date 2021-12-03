@@ -61,20 +61,3 @@ class MathInt {
 public:
 	static int Modulo(int a, int b);
 };
-
-//class GarbageCollector {
-//public:
-//	template <typename T>
-//	static void ReleaseArray(T* arr, int size);
-//};
-
-//template<typename T>
-//inline void GarbageCollector::ReleaseArray(T* arr, int size)
-//{
-//	for (size_t i = 0; i < size; i++)
-//	{
-//		delete(&arr[i]);
-//	}
-//	delete(&arr);
-//	delete(arr);
-//}
