@@ -151,13 +151,14 @@ public:
 	bool GetHasShip();
 	void SetHasShip(bool hasShip);
 
-	void Reset();
+	virtual void Reset();
 };
 
 class WeightBoardNode : public BoardNode {
 private:
 	int _weight;
 public:
+	void Reset() override;
 	int GetWeight();
 	void SetWeight(int weight);
 };

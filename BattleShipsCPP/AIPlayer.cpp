@@ -36,6 +36,10 @@ void AIPlayer::DrawWeights()
 		}
 	}
 }
+void AIPlayer::Reset()
+{
+	GamePlayer::Reset();
+}
 void AIPlayer::FillBattleshipsBoard() {
 	//Randomly place ships
 

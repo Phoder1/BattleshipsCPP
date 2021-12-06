@@ -9,7 +9,7 @@ static const int BoardSizeX = 10;
 static const int BoardSizeY = 10;
 
 //An option to automatically surround sanked ships with hits
-static const bool AutoClearAreaAroundSankedShip = true;
+static const bool AutoClearAreaAroundSankedShip = false;
 
 template<typename T>
 class Board
@@ -79,7 +79,7 @@ bool Board<T>::IsFullHits()
 {
 	for (size_t x = 0; x < BoardSizeX; x++)
 		for (size_t y = 0; y < BoardSizeY; y++)
-			if (!_tiles[x, y]->GetHit())
+			if (!_tiles[x][y].GetHit())
 				return false;
 
 	return true;
@@ -175,7 +175,7 @@ Battleship Board<T>::GetShipAtPosition(Vector2Int position) {
 
 			int TotalLength = directionalLength;
 			while (true) {
-				if (!GetHasShip(shipPosition + shipDirection * directionalLength)) {
+				if (!GetHasShip(shipPosition + shipDirection * TotalLength)) {
 					return Battleship(shipPosition, shipDirection, TotalLength);
 				}
 				TotalLength++;
@@ -335,16 +335,16 @@ void Board<T>::Reset()
 {
 	for (size_t x = 0; x < BoardSizeX; x++)
 		for (size_t y = 0; y < BoardSizeY; y++)
-			((BoardNode*)_tiles[x, y])->Reset();
-}
-
-template<typename T>
-Board<T>::~Board()
-{
+			_tiles[x][y].Reset();
 }
 
 template<typename T>
 bool Board<T>::IsInside(Vector2Int position)
 {
 	return position.X >= 0 && position.Y >= 0 && position.X < Size.X&& position.Y < Size.Y;
+}
+
+template<typename T>
+Board<T>::~Board()
+{
 }

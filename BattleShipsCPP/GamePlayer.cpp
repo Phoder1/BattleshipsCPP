@@ -6,17 +6,21 @@
 
 using namespace std;
 
+void GamePlayer::ResetHP() {
+	_hp = 0;
+
+	for (size_t i = 0; i < Battleship::PlayerShipsTypes; i++)
+		_hp += Battleship::PlayerShipsLength[i] * Battleship::PlayerShipsAmount[i];
+}
 GamePlayer::GamePlayer(string name)
 {
 	_name = name;
 	PlayerCount++;
 	_playerNumber = PlayerCount;
 	_opponent = nullptr;
-	_hp = 0;
 	_playerColor = &Color::DefaultColor;
 
-	for (size_t i = 0; i < Battleship::PlayerShipsTypes; i++)
-		_hp += Battleship::PlayerShipsLength[i] * Battleship::PlayerShipsAmount[i];
+	ResetHP();
 }
 
 void GamePlayer::StartGame(GamePlayer* opponent)
@@ -40,6 +44,8 @@ int GamePlayer::GetPlayerNumber() {
 
 void GamePlayer::Reset()
 {
+	ResetHP();
+	GetBoard()->Reset();
 }
 
 void GamePlayer::Hit(Vector2Int position)
@@ -57,29 +63,25 @@ void GamePlayer::Hit(Vector2Int position)
 	//The rules says the player must declare when a ship has been sanked, so if this option is active, it will automatically surround it with hits
 	if (AutoClearAreaAroundSankedShip && board->GetHasShip(position)) {
 		Battleship ship = board->GetShipAtPosition(position);
-		//if(board->IsShipSanked(ship)){
-		//}
-		for (size_t i = 0; i < ship.GetLength(); i++)
-		{
-			Vector2Int currentShipTile = ship.GetOrigin() + ship.GetDirection() * i;
-			for (size_t x = 0; x < 3; x++)
+		if (board->IsShipSanked(ship)) {
+			for (size_t i = 0; i < ship.GetLength(); i++)
 			{
-				for (size_t y = 0; y < 3; y++)
+				Vector2Int currentShipTile = ship.GetOrigin() + ship.GetDirection() * i;
+				for (size_t x = 0; x < 3; x++)
 				{
-					Vector2Int tempPos = currentShipTile + Vector2Int(x - 1, y - 1);
-					if (board->IsInside(tempPos) && !board->IsHit(tempPos)) {
-						board->SetHit(tempPos, true);
-						if (board->GetHasShip(tempPos))
-							_hp--;
+					for (size_t y = 0; y < 3; y++)
+					{
+						Vector2Int tempPos = currentShipTile + Vector2Int(x - 1, y - 1);
+						if (board->IsInside(tempPos) && !board->IsHit(tempPos)) {
+							board->SetHit(tempPos, true);
+							if (board->GetHasShip(tempPos))
+								_hp--;
+						}
 					}
 				}
 			}
 		}
 	}
-}
-
-GamePlayer::~GamePlayer()
-{
 }
 
 void GamePlayer::SetHP(int hp)

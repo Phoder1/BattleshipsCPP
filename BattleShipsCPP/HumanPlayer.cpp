@@ -3,6 +3,10 @@
 #include "Utillities.h"
 #include "Types.h"
 
+static bool DrawShipsOnPlacementDebug = true;
+Board<BoardNode>* HumanPlayer::GetBoard() {
+	return _board;
+}
 HumanPlayer* HumanPlayer::CreateHumanPlayer() {
 	int playerNumber = PlayerCount + 1;
 	string name;
@@ -21,9 +25,11 @@ void HumanPlayer::SetColor(Color* color)
 	_board->SetColor(color);
 }
 
-Board<BoardNode>* HumanPlayer::GetBoard() {
-	return _board;
+void HumanPlayer::Reset()
+{
+	GamePlayer::Reset();
 }
+
 
 HumanPlayer::~HumanPlayer()
 {
@@ -113,7 +119,7 @@ void HumanPlayer::PlayTurn() {
 		//Update the new position and origin
 		position = position.Modulo(board->Size);
 
-		board->DrawBoard(true, true);
+		board->DrawBoard(DrawShipsOnPlacementDebug, true);
 		board->MoveCursorToPosition(position);
 
 		if (board->IsHit(position))
@@ -149,7 +155,7 @@ void HumanPlayer::PlayTurn() {
 	}
 
 	_opponent->Hit(position);
-	board->DrawBoard(true, true);
+	board->DrawBoard(DrawShipsOnPlacementDebug, true);
 }
 
 void HumanPlayer::ConfirmReady() {

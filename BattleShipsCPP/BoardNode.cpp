@@ -36,3 +36,10 @@ void WeightBoardNode::SetWeight(int weight)
 {
 	_weight = weight;
 }
+
+void WeightBoardNode::Reset()
+{
+	BoardNode::Reset();
+
+	_weight = 0;
+}

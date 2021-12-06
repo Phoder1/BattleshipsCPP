@@ -17,6 +17,7 @@ protected:
 	GamePlayer(string name);
 	Color* _playerColor;
 public:
+	void ResetHP();
 	static int PlayerCount;
 
 	virtual Board<BoardNode>* GetBoard() = 0;
@@ -57,6 +58,7 @@ public:
 	void GamePlayer::PlayTurn() override;
 	void SetColor(Color* color) override;
 	void GamePlayer::ConfirmReady() override;
+	void Reset() override;
 
 	static HumanPlayer* CreateHumanPlayer();
 
@@ -86,6 +88,7 @@ public:
 	void GamePlayer::PlayTurn() override;
 	void SetColor(Color* color) override;
 	void GamePlayer::ConfirmReady() override;
+	void Reset() override;
 
 	void DrawWeights();
 	static AIPlayer* CreateAIPlayer();

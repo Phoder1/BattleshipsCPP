@@ -32,10 +32,12 @@ int main()
 		//Start the game
 		GamePlayer* winningPlayer = gameManager.PlayGame(player1, player2);
 
+		Console::SetCursorY(0);
 		//Print win message
 		Console::PrintInMiddleOfConsole(winningPlayer->GetName() + " has won!!", true, true);
-		cout << endl;
+		Input::Pause();
 
+		Console::ClearConsole();
 		//Ask if he wants to keep playing
 	} while (Input::GetConfirmation("Play again?"));
 
