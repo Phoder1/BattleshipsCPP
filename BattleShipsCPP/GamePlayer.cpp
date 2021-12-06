@@ -6,6 +6,8 @@
 
 using namespace std;
 
+int GamePlayer::PlayerCount = 0;
+
 void GamePlayer::ResetHP() {
 	_hp = 0;
 
@@ -52,7 +54,7 @@ void GamePlayer::Hit(Vector2Int position)
 {
 	Board<BoardNode>* board = GetBoard();
 
-	if (!board->IsHit(position)) {
+	if (!board->GetHit(position)) {
 		board->SetHit(position, true);
 
 		if (board->GetHasShip(position))
@@ -72,7 +74,7 @@ void GamePlayer::Hit(Vector2Int position)
 					for (size_t y = 0; y < 3; y++)
 					{
 						Vector2Int tempPos = currentShipTile + Vector2Int(x - 1, y - 1);
-						if (board->IsInside(tempPos) && !board->IsHit(tempPos)) {
+						if (board->IsInside(tempPos) && !board->GetHit(tempPos)) {
 							board->SetHit(tempPos, true);
 							if (board->GetHasShip(tempPos))
 								_hp--;
@@ -104,4 +106,6 @@ Color* GamePlayer::GetColor()
 	return _playerColor;
 }
 
-int GamePlayer::PlayerCount = 0;
+GamePlayer::~GamePlayer()
+{
+}

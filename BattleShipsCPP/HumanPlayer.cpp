@@ -3,7 +3,7 @@
 #include "Utillities.h"
 #include "Types.h"
 
-static bool DrawShipsOnPlacementDebug = true;
+static bool DrawShipsOnPlacementDebug = false;
 Board<BoardNode>* HumanPlayer::GetBoard() {
 	return _board;
 }
@@ -122,7 +122,7 @@ void HumanPlayer::PlayTurn() {
 		board->DrawBoard(DrawShipsOnPlacementDebug, true);
 		board->MoveCursorToPosition(position);
 
-		if (board->IsHit(position))
+		if (board->GetHit(position))
 			Color::SetTextColor(Color::RedIndex);
 		else
 			Color::SetTextColor(Color::GreenIndex);
@@ -146,7 +146,7 @@ void HumanPlayer::PlayTurn() {
 			position += Vector2Int::Right();
 			break;
 		case NavigationKey::Confirm:
-			if (board->IsHit(position))
+			if (board->GetHit(position))
 				break;
 
 			foundALegalPosition = true;

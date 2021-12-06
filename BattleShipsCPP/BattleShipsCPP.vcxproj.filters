@@ -51,9 +51,6 @@
     <ClCompile Include="Utillities.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Board.cpp">
-      <Filter>Source Files\Types</Filter>
-    </ClCompile>
     <ClCompile Include="Battleship.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

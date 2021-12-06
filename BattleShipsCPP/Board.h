@@ -9,7 +9,7 @@ static const int BoardSizeX = 10;
 static const int BoardSizeY = 10;
 
 //An option to automatically surround sanked ships with hits
-static const bool AutoClearAreaAroundSankedShip = false;
+static const bool AutoClearAreaAroundSankedShip = true;
 
 template<typename T>
 class Board
@@ -33,7 +33,7 @@ public:
 	Vector2Int GetPosition();
 	void SetPosition(Vector2Int position);
 
-	bool IsHit(Vector2Int position);
+	bool GetHit(Vector2Int position);
 	void SetHit(Vector2Int position, bool value);
 
 	bool GetHasShip(Vector2Int position);
@@ -128,7 +128,7 @@ void Board<T>::SetPosition(Vector2Int position)
 }
 
 template<typename T>
-bool Board<T>::IsHit(Vector2Int position)
+bool Board<T>::GetHit(Vector2Int position)
 {
 	return _tiles[position.X][position.Y].GetHit();
 }
@@ -198,7 +198,7 @@ bool Board<T>::IsShipSanked(Battleship ship) {
 	for (size_t i = 0; i < ship.GetLength(); i++)
 	{
 		Vector2Int currentPos = ship.GetOrigin() + ship.GetDirection() * i;
-		if (!IsHit(currentPos))
+		if (!GetHit(currentPos))
 			return false;
 	}
 
