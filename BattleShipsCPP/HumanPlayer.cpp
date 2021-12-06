@@ -3,7 +3,7 @@
 #include "Utillities.h"
 #include "Types.h"
 
-static bool DrawShipsOnPlacementDebug = false;
+
 Board<BoardNode>* HumanPlayer::GetBoard() {
 	return _board;
 }
@@ -104,13 +104,12 @@ void HumanPlayer::PlayTurn() {
 	
 	Console::ClearConsole();
 
-
-
 	Vector2Int position = Vector2Int(BoardSizeX / 2, BoardSizeY / 2);
 
 	Color currentColor = Color::GetCurrentConsoleColor();
 
 	Board<BoardNode>* board = _opponent->GetBoard();
+		DrawBothBoards();
 
 	bool foundALegalPosition = false;
 	//Keep tyring until a legal position is found
@@ -119,7 +118,7 @@ void HumanPlayer::PlayTurn() {
 		//Update the new position and origin
 		position = position.Modulo(board->Size);
 
-		board->DrawBoard(DrawShipsOnPlacementDebug, true);
+		board->DrawBoard(DrawOpponentShips, true);
 		board->MoveCursorToPosition(position);
 
 		if (board->GetHit(position))
@@ -155,7 +154,7 @@ void HumanPlayer::PlayTurn() {
 	}
 
 	_opponent->Hit(position);
-	board->DrawBoard(DrawShipsOnPlacementDebug, true);
+	board->DrawBoard(DrawOpponentShips, true);
 }
 
 void HumanPlayer::ConfirmReady() {

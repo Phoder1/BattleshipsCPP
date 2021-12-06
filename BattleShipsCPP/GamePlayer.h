@@ -16,7 +16,14 @@ protected:
 	GamePlayer* _opponent;
 	GamePlayer(string name);
 	Color* _playerColor;
+
 public:
+	static const int SpaceBetweenBoards;
+	static const int BoardsOffestRight;
+	static const int BoardsDrawHeight;
+	static const bool DrawOpponentShips;
+
+
 	void ResetHP();
 	static int PlayerCount;
 
@@ -30,10 +37,13 @@ public:
 
 	void Hit(Vector2Int position);
 
+	GamePlayer* GetOpponent();
 	int GetPlayerNumber();
 	string GetName();
 	int GetHp();
 	Color* GetColor();
+
+	void DrawBothBoards();
 
 	void StartGame(GamePlayer* opponent);
 

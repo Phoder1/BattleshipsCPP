@@ -45,6 +45,8 @@ public:
 	bool IsInside(Vector2Int position);
 
 	void DrawShip(Battleship ship);
+
+	void DrawTitle(string Title);
 	bool IsValid(Battleship ship);
 	bool IsShipSanked(Battleship ship);
 
@@ -194,7 +196,7 @@ T Board<T>::GetTile(Vector2Int position) {
 
 template<typename T>
 bool Board<T>::IsShipSanked(Battleship ship) {
-	
+
 	for (size_t i = 0; i < ship.GetLength(); i++)
 	{
 		Vector2Int currentPos = ship.GetOrigin() + ship.GetDirection() * i;
@@ -235,7 +237,6 @@ void Board<T>::DrawBoard(bool visibleShips, bool visibleHits)
 {
 	Color currentColor = Color::GetCurrentConsoleColor();
 	_color->ApplyToText();
-	Console::ClearConsole();
 	Console::SetCursorY(_position.Y);
 	int charCount = CharCount.Y;
 	for (size_t i = 0; i < charCount; i++)
@@ -307,6 +308,15 @@ void Board<T>::DrawShip(Battleship ship)
 	MoveCursorToPosition(ship.GetOrigin());
 
 	currentColor.ApplyToText();
+}
+
+template<typename T>
+inline void Board<T>::DrawTitle(string title)
+{
+	int x = _position.X + (CharCount.X / 2) - (title.length() / 2);
+	Console::SetCursorPosition(Vector2Int(x, _position.Y - 1));
+
+	cout << title;
 }
 
 template<typename T>

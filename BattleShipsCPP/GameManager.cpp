@@ -17,12 +17,12 @@ GamePlayer* GameManager::PlayGame(GamePlayer* startingPlayer, GamePlayer* second
 	_secondPlayer = secondPlayer;
 
 	Console::ClearConsole();
-	
+
 	Console::PrintInMiddleOfConsole(startingPlayer->GetName() + " !~VS~! " + secondPlayer->GetName(), true);
 	cout << endl;
 	Console::PrintInMiddleOfConsole("Use WASD to move, Q/E to rotate and F to select.", true, true);
 
-	//Get players ready for the new game, and passes to each his opponent
+	//Get players ready for the new egame, and passes to each his opponent
 	startingPlayer->StartGame(secondPlayer);
 
 	ConfirmPassTurnTo(secondPlayer);
@@ -45,7 +45,7 @@ void GameManager::ConfirmPassTurnTo(GamePlayer* player)
 	Console::SetCursorY(0);
 	Input::WaitForAnyKey("Press Enter to pass the turn to " + player->GetName(), VK_RETURN);
 }
-bool GameManager::ValidateIfWon(GamePlayer* player)
+bool GameManager::IfWon(GamePlayer* player)
 {
 	if (_startingPlayer != player)
 		return _startingPlayer->GetHp() <= 0;
@@ -57,18 +57,19 @@ GamePlayer* GameManager::StartGameLoop() {
 	while (true) {
 		ValidateCanPlayTurn();
 
+
 		//player 1 turn
 		StartTurn(_startingPlayer);
 
-		if (ValidateIfWon(_startingPlayer))
+		if (IfWon(_startingPlayer))
 			return _startingPlayer;
 
 		ConfirmPassTurnTo(_secondPlayer);
-		
+
 		//player 2 turn
 		StartTurn(_secondPlayer);
 
-		if (ValidateIfWon(_secondPlayer))
+		if (IfWon(_secondPlayer))
 			return _secondPlayer;
 
 		ConfirmPassTurnTo(_startingPlayer);
@@ -82,7 +83,7 @@ GamePlayer* GameManager::StartGameLoop() {
 /// <returns></returns>
 void GameManager::ValidateCanPlayTurn()
 {
-	if(_startingPlayer->GetBoard()->IsFullHits() || _secondPlayer->GetBoard()->IsFullHits())
+	if (_startingPlayer->GetBoard()->IsFullHits() || _secondPlayer->GetBoard()->IsFullHits())
 		throw new runtime_error("Boards are completely full, error in win condition detection!");
 }
 
@@ -92,8 +93,26 @@ void GameManager::StartTurn(GamePlayer* currentTurnPlayer)
 
 	Console::PrintInMiddleOfConsole("Turn " + to_string(_turnNumber) + "!", true);
 
-	currentTurnPlayer->ConfirmReady();
+	int opponentHP;
+	bool GetAnotherTurn;
 
-	currentTurnPlayer->PlayTurn();
+	do {
+		opponentHP = currentTurnPlayer->GetOpponent()->GetHp();
+
+		currentTurnPlayer->ConfirmReady();
+
+		currentTurnPlayer->PlayTurn();
+
+		GetAnotherTurn = currentTurnPlayer->GetOpponent()->GetHp() < opponentHP;
+
+		if (IfWon(currentTurnPlayer))
+			return;
+
+		if (GetAnotherTurn) {
+			Console::SetCursorY(0);
+			Console::PrintInMiddleOfConsole("Successfully hit! You get another turn!", true);
+		}
+
+	} while (GetAnotherTurn);
 }
 

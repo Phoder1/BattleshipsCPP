@@ -8,6 +8,13 @@ using namespace std;
 
 int GamePlayer::PlayerCount = 0;
 
+const bool GamePlayer::DrawOpponentShips = false;
+
+const int GamePlayer::SpaceBetweenBoards = 15;
+const int GamePlayer::BoardsOffestRight = -20;
+const int GamePlayer::BoardsDrawHeight = 5;
+
+
 void GamePlayer::ResetHP() {
 	_hp = 0;
 
@@ -38,6 +45,11 @@ void GamePlayer::StartGame(GamePlayer* opponent)
 
 string GamePlayer::GetName() {
 	return _name;
+}
+
+GamePlayer* GamePlayer::GetOpponent()
+{
+	return _opponent;
 }
 
 int GamePlayer::GetPlayerNumber() {
@@ -104,6 +116,27 @@ void GamePlayer::SetColor(Color* color)
 Color* GamePlayer::GetColor()
 {
 	return _playerColor;
+}
+
+void GamePlayer::DrawBothBoards()
+{
+	int totalWidth = (BoardSizeX * 2) + SpaceBetweenBoards;
+	int screenCenterX = (Console::GetConsoleSize().X / 2) + BoardsOffestRight;
+
+	int opponentPosX = screenCenterX - (totalWidth / 2);
+	int boardPosX = screenCenterX + (totalWidth / 2);
+
+	Board<BoardNode>* board = GetBoard();
+	Board<BoardNode>* opponentBoard = _opponent->GetBoard();
+
+	board->SetPosition(Vector2Int(boardPosX, BoardsDrawHeight));
+	opponentBoard->SetPosition(Vector2Int(opponentPosX, BoardsDrawHeight));
+
+	board->DrawBoard(true, true);
+	board->DrawTitle("Your board");
+
+	opponentBoard->DrawBoard(DrawOpponentShips, true);
+	opponentBoard->DrawTitle(_opponent->GetName() + "'s board");
 }
 
 GamePlayer::~GamePlayer()

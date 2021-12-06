@@ -16,7 +16,7 @@ public:
 	/// </summary>
 	GamePlayer* PlayGame(GamePlayer* startingPlayer, GamePlayer* secondPlayer);
 	void ConfirmPassTurnTo(GamePlayer* secondPlayer);
-	bool ValidateIfWon(GamePlayer* player);
+	bool IfWon(GamePlayer* player);
 	GamePlayer* StartGameLoop();
 	void ValidateCanPlayTurn();
 	void StartTurn(GamePlayer* currentTurnPlayer);
