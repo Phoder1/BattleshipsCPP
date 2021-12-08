@@ -8,7 +8,7 @@ using namespace std;
 
 int GamePlayer::PlayerCount = 0;
 
-const bool GamePlayer::DrawOpponentShips = false;
+const bool GamePlayer::DrawOpponentShips = true;
 
 const int GamePlayer::SpaceBetweenBoards = 15;
 const int GamePlayer::BoardsOffestRight = 15;
@@ -28,8 +28,14 @@ GamePlayer::GamePlayer(string name)
 	_playerNumber = PlayerCount;
 	_opponent = nullptr;
 	_playerColor = &Color::DefaultColor;
+	_board = new Board(_playerColor);
 
 	ResetHP();
+}
+
+Board* GamePlayer::GetBoard()
+{
+	return _board;
 }
 
 void GamePlayer::StartGame(GamePlayer* opponent)
@@ -64,7 +70,7 @@ void GamePlayer::Reset()
 
 void GamePlayer::Hit(Vector2Int position)
 {
-	Board<BoardNode>* board = GetBoard();
+	Board* board = GetBoard();
 
 	if (!board->GetHit(position)) {
 		board->SetHit(position, true);
@@ -136,8 +142,8 @@ void GamePlayer::DrawBothBoards()
 	int opponentPosX = screenCenterX - (totalWidth / 2);
 	int boardPosX = screenCenterX + (totalWidth / 2);
 
-	Board<BoardNode>* board = GetBoard();
-	Board<BoardNode>* opponentBoard = _opponent->GetBoard();
+	Board* board = GetBoard();
+	Board* opponentBoard = _opponent->GetBoard();
 
 	board->SetPosition(Vector2Int(boardPosX, BoardsDrawHeight));
 	opponentBoard->SetPosition(Vector2Int(opponentPosX, BoardsDrawHeight));
@@ -151,4 +157,5 @@ void GamePlayer::DrawBothBoards()
 
 GamePlayer::~GamePlayer()
 {
+	delete(_board);
 }

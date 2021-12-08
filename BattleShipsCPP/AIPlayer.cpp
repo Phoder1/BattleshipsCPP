@@ -17,9 +17,7 @@ AIPlayer* AIPlayer::CreateAIPlayer()
 	AIPlayer* pAIPlayer = new AIPlayer(PossibleNames[nameIndex]);
 	return pAIPlayer;
 }
-Board<BoardNode>* AIPlayer::GetBoard() {
-	return (Board<BoardNode>*)_board;
-}
+
 void AIPlayer::SetColor(Color* color)
 {
 	GamePlayer::SetColor(color);
@@ -123,5 +121,4 @@ void AIPlayer::ConfirmEndTurn() {
 
 AIPlayer::~AIPlayer()
 {
-	delete(_board);
 }

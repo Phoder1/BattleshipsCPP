@@ -59,7 +59,7 @@ void Tests::TestAllColors()
 	cout << "ReturnedToDefault" << endl;
 }
 void Tests::BoardInputTest() {
-	Board<BoardNode>* board = new Board<BoardNode>();
+	Board* board = new Board();
 	board->DrawBoard();
 
 	Vector2Int position = Vector2Int::Zero();

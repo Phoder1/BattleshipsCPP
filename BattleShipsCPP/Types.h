@@ -152,15 +152,4 @@ public:
 	virtual void Reset();
 };
 
-class WeightBoardNode : public BoardNode {
-private:
-	int _weight  ;
-public:
-	WeightBoardNode() : BoardNode() { _weight = 0; }
-
-	void Reset() override;
-	int GetWeight();
-	void SetWeight(int weight);
-};
-
 

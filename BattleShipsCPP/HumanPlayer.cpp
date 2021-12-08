@@ -3,10 +3,6 @@
 #include "Utillities.h"
 #include "Types.h"
 
-
-Board<BoardNode>* HumanPlayer::GetBoard() {
-	return _board;
-}
 HumanPlayer* HumanPlayer::CreateHumanPlayer() {
 	int playerNumber = PlayerCount + 1;
 	string name;
@@ -29,12 +25,6 @@ void HumanPlayer::Reset()
 {
 	GamePlayer::Reset();
 	_board->Reset();
-}
-
-
-HumanPlayer::~HumanPlayer()
-{
-	delete(_board);
 }
 
 void HumanPlayer::FillBattleshipsBoard() {
@@ -93,7 +83,7 @@ void HumanPlayer::FillBattleshipsBoard() {
 				}
 			}
 
-			//Add the new legal ship to the board
+			//Add the new legal ship to the opponentBoard
 			_board->AddShip(ship);
 		}
 	}
@@ -109,7 +99,7 @@ void HumanPlayer::PlayTurn() {
 
 	Color currentColor = Color::GetCurrentConsoleColor();
 
-	Board<BoardNode>* board = _opponent->GetBoard();
+	Board* opponentBoard = _opponent->GetBoard();
 		DrawBothBoards();
 
 	bool foundALegalPosition = false;
@@ -117,12 +107,12 @@ void HumanPlayer::PlayTurn() {
 	while (!foundALegalPosition) {
 
 		//Update the new position and origin
-		position = position.Modulo(board->Size);
+		position = position.Modulo(opponentBoard->Size);
 
-		board->DrawBoard(DrawOpponentShips, true);
-		board->MoveCursorToPosition(position);
+		opponentBoard->DrawBoard(DrawOpponentShips, true);
+		opponentBoard->MoveCursorToPosition(position);
 
-		if (board->GetHit(position))
+		if (opponentBoard->GetHit(position))
 			Color::SetTextColor(Color::RedIndex);
 		else
 			Color::SetTextColor(Color::GreenIndex);
@@ -146,7 +136,7 @@ void HumanPlayer::PlayTurn() {
 			position += Vector2Int::Right();
 			break;
 		case NavigationKey::Confirm:
-			if (board->GetHit(position))
+			if (opponentBoard->GetHit(position))
 				break;
 
 			foundALegalPosition = true;
@@ -155,7 +145,7 @@ void HumanPlayer::PlayTurn() {
 	}
 
 	_opponent->Hit(position);
-	board->DrawBoard(DrawOpponentShips, true);
+	opponentBoard->DrawBoard(DrawOpponentShips, true);
 }
 
 void HumanPlayer::ConfirmStartTurn() {
@@ -176,4 +166,9 @@ void HumanPlayer::ConfirmEndTurn() {
 
 	if (IsOpponentHuman())
 		Console::ClearConsole();
+}
+
+HumanPlayer::~HumanPlayer()
+{
+
 }
