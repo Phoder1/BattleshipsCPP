@@ -28,6 +28,7 @@ void HumanPlayer::SetColor(Color* color)
 void HumanPlayer::Reset()
 {
 	GamePlayer::Reset();
+	_board->Reset();
 }
 
 
@@ -157,11 +158,22 @@ void HumanPlayer::PlayTurn() {
 	board->DrawBoard(DrawOpponentShips, true);
 }
 
-void HumanPlayer::ConfirmReady() {
+void HumanPlayer::ConfirmStartTurn() {
+
+	if (typeid(*_opponent) == typeid(AIPlayer))
+		return;
 	Color currentColor = Color::GetCurrentConsoleColor();
 
 	_playerColor->ApplyToText();
 	Input::WaitForAnyKey(GetName() + " press ENTER to start your turn when ready!", VK_RETURN);
 
 	currentColor.ApplyToText();
+}
+void HumanPlayer::ConfirmEndTurn() {
+
+	Console::SetCursorY(0);
+	Input::WaitForAnyKey("Press Enter to pass the turn to " + _opponent->GetName(), VK_RETURN);
+
+	if (IsOpponentHuman())
+		Console::ClearConsole();
 }

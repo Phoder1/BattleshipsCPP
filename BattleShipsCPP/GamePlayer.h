@@ -30,12 +30,15 @@ public:
 	virtual Board<BoardNode>* GetBoard() = 0;
 	virtual void FillBattleshipsBoard() = 0;
 	virtual void PlayTurn() = 0;
-	virtual void ConfirmReady() = 0;
-
+	virtual void ConfirmStartTurn() = 0;
+	virtual void ConfirmEndTurn() = 0;
 	virtual void SetColor(Color* color);
 	virtual void Reset();
 
 	void Hit(Vector2Int position);
+	bool IsOpponentAI();
+	bool IsOpponentHuman();
+
 
 	GamePlayer* GetOpponent();
 	int GetPlayerNumber();
@@ -67,7 +70,8 @@ public:
 	void GamePlayer::FillBattleshipsBoard() override;
 	void GamePlayer::PlayTurn() override;
 	void SetColor(Color* color) override;
-	void GamePlayer::ConfirmReady() override;
+	void GamePlayer::ConfirmStartTurn() override;
+	void GamePlayer::ConfirmEndTurn() override;
 	void Reset() override;
 
 	static HumanPlayer* CreateHumanPlayer();
@@ -80,24 +84,23 @@ class AIPlayer : public GamePlayer
 {
 	static const int PossibleNamesCount;
 	static const string PossibleNames[];
-	Board<WeightBoardNode>* _board;
+	//Board<WeightBoardNode>* _board;
+	Board<BoardNode>* _board;
+	
 public:
 	using GamePlayer::GamePlayer;
 
-	AIPlayer() : GamePlayer("") {
-		_board = new Board<WeightBoardNode>();
-		srand(time(NULL));
-
-		int nameIndex = rand() % PossibleNamesCount;
-
-		_name = PossibleNames[nameIndex];
+	AIPlayer(string name) : GamePlayer(name) {
+		//_board = new Board<WeightBoardNode>();
+		_board = new Board<BoardNode>();
 	}
 
 	Board<BoardNode>* GamePlayer::GetBoard() override;
 	void GamePlayer::FillBattleshipsBoard() override;
 	void GamePlayer::PlayTurn() override;
 	void SetColor(Color* color) override;
-	void GamePlayer::ConfirmReady() override;
+	void GamePlayer::ConfirmStartTurn() override;
+	void GamePlayer::ConfirmEndTurn() override;
 	void Reset() override;
 
 	void DrawWeights();

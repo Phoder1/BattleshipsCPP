@@ -6,14 +6,14 @@
 using namespace std;
 
 enum class EightDirection {
-	Up,
-	Down,
-	Left,
-	right,
-	UpLeft,
-	UpRight,
-	DownLeft,
-	DownRight
+	Up = 0,
+	Down = 1,
+	Left = 2,
+	right= 3,
+	UpLeft = 4,
+	UpRight= 5,
+	DownLeft= 6,
+	DownRight = 7
 };
 struct Vector2Int
 {
@@ -144,10 +144,8 @@ private:
 	bool _hasShip;
 public:
 	BoardNode();
-
 	bool GetHit();
 	void SetHit(bool hit);
-
 	bool GetHasShip();
 	void SetHasShip(bool hasShip);
 
@@ -156,8 +154,10 @@ public:
 
 class WeightBoardNode : public BoardNode {
 private:
-	int _weight;
+	int _weight  ;
 public:
+	WeightBoardNode() : BoardNode() { _weight = 0; }
+
 	void Reset() override;
 	int GetWeight();
 	void SetWeight(int weight);

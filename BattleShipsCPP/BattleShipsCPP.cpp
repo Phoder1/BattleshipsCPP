@@ -20,11 +20,13 @@ int main()
 	
 	//Player 1
 	GamePlayer* player1 = HumanPlayer::CreateHumanPlayer();
+	//GamePlayer* player1 = AIPlayer::CreateAIPlayer();
 	Color* player1Color = new Color(Color::BlueIndex);
 	player1->SetColor(player1Color);
 
 	//Player 2
-	GamePlayer* player2 = HumanPlayer::CreateHumanPlayer();
+	//GamePlayer* player2 =  HumanPlayer::CreateHumanPlayer();
+	GamePlayer* player2 = AIPlayer::CreateAIPlayer();
 	Color* player2Color = new Color(Color::YellowIndex);
 	player2->SetColor(player2Color);
 

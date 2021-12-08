@@ -11,7 +11,7 @@ int GamePlayer::PlayerCount = 0;
 const bool GamePlayer::DrawOpponentShips = false;
 
 const int GamePlayer::SpaceBetweenBoards = 15;
-const int GamePlayer::BoardsOffestRight = -20;
+const int GamePlayer::BoardsOffestRight = 15;
 const int GamePlayer::BoardsDrawHeight = 5;
 
 
@@ -59,7 +59,7 @@ int GamePlayer::GetPlayerNumber() {
 void GamePlayer::Reset()
 {
 	ResetHP();
-	GetBoard()->Reset();
+	//GetBoard()->Reset();
 }
 
 void GamePlayer::Hit(Vector2Int position)
@@ -96,6 +96,16 @@ void GamePlayer::Hit(Vector2Int position)
 			}
 		}
 	}
+}
+
+bool GamePlayer::IsOpponentAI()
+{
+	return (typeid(*_opponent) == typeid(AIPlayer));
+}
+
+bool GamePlayer::IsOpponentHuman()
+{
+	return (typeid(*_opponent) == typeid(HumanPlayer));
 }
 
 void GamePlayer::SetHP(int hp)

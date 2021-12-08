@@ -25,12 +25,12 @@ GamePlayer* GameManager::PlayGame(GamePlayer* startingPlayer, GamePlayer* second
 	//Get players ready for the new egame, and passes to each his opponent
 	startingPlayer->StartGame(secondPlayer);
 
-	ConfirmPassTurnTo(secondPlayer);
+	_startingPlayer->ConfirmEndTurn();
 
 
 	secondPlayer->StartGame(startingPlayer);
 
-	ConfirmPassTurnTo(startingPlayer);
+	_secondPlayer->ConfirmEndTurn();
 
 	//Start the actual game loop
 	GamePlayer* winningPlayer = StartGameLoop();
@@ -40,11 +40,7 @@ GamePlayer* GameManager::PlayGame(GamePlayer* startingPlayer, GamePlayer* second
 	//Return the winnig player
 	return winningPlayer;
 }
-void GameManager::ConfirmPassTurnTo(GamePlayer* player)
-{
-	Console::SetCursorY(0);
-	Input::WaitForAnyKey("Press Enter to pass the turn to " + player->GetName(), VK_RETURN);
-}
+
 bool GameManager::IfWon(GamePlayer* player)
 {
 	if (_startingPlayer != player)
@@ -64,7 +60,7 @@ GamePlayer* GameManager::StartGameLoop() {
 		if (IfWon(_startingPlayer))
 			return _startingPlayer;
 
-		ConfirmPassTurnTo(_secondPlayer);
+		_startingPlayer->ConfirmEndTurn();
 
 		//player 2 turn
 		StartTurn(_secondPlayer);
@@ -72,7 +68,7 @@ GamePlayer* GameManager::StartGameLoop() {
 		if (IfWon(_secondPlayer))
 			return _secondPlayer;
 
-		ConfirmPassTurnTo(_startingPlayer);
+		_secondPlayer->ConfirmEndTurn();
 
 		_turnNumber++;
 	}
@@ -89,8 +85,7 @@ void GameManager::ValidateCanPlayTurn()
 
 void GameManager::StartTurn(GamePlayer* currentTurnPlayer)
 {
-	Console::ClearConsole();
-
+	
 	Console::PrintInMiddleOfConsole("Turn " + to_string(_turnNumber) + "!", true);
 
 	int opponentHP;
@@ -99,7 +94,7 @@ void GameManager::StartTurn(GamePlayer* currentTurnPlayer)
 	do {
 		opponentHP = currentTurnPlayer->GetOpponent()->GetHp();
 
-		currentTurnPlayer->ConfirmReady();
+		currentTurnPlayer->ConfirmStartTurn();
 
 		currentTurnPlayer->PlayTurn();
 
