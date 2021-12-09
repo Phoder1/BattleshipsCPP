@@ -21,6 +21,8 @@ void HumanPlayer::SetColor(Color* color)
 	_board->SetColor(color);
 }
 
+
+
 void HumanPlayer::Reset()
 {
 	GamePlayer::Reset();

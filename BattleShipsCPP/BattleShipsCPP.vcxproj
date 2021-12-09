@@ -140,6 +140,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AIBrain.cpp" />
     <ClCompile Include="AIPlayer.cpp" />
     <ClCompile Include="Battleship.cpp" />
     <ClCompile Include="BattleshipsCPP.cpp" />
@@ -156,6 +157,7 @@
     <ClCompile Include="Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AIBrain.h" />
     <ClInclude Include="BattleshipsCPP.h" />
     <ClInclude Include="Board.h" />
     <ClInclude Include="GameManager.h" />
