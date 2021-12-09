@@ -10,7 +10,7 @@ private:
 	Vector2Int _lastPosition;
 	GamePlayer* _pPlayer;
 	GamePlayer* _pOpponent;
-	Board<BoardNode>* _pBoard;
+	Board* _pBoard;
 	int** _pWeightBoard;
 
 	const int AlreadyHitPoint = -1;

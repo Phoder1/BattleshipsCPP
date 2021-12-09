@@ -7,7 +7,7 @@ void AIBrain::Play() {
 	// hit randomly if no potential plays found
 	// or target the highest valued point on board
 	Vector2Int hitPosition;
-	Board<BoardNode>* pOpponentBoard = _pOpponent->GetBoard();
+	Board* pOpponentBoard = _pOpponent->GetBoard();
 
 	ScanWeightBoard();
 
@@ -60,7 +60,7 @@ void AIBrain::ScanForPotentialPlays()
 void AIBrain::ScanBoard()
 {
 	// scanning the board to recieve the information about the current state of the board game
-	Board<BoardNode>* pOpponentBoard = _pOpponent->GetBoard();
+	Board* pOpponentBoard = _pOpponent->GetBoard();
 	for (int i = 0; i < BoardSizeX; i++)
 	{
 		for (int j = 0; j < BoardSizeY; j++)

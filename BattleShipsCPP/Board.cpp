@@ -15,6 +15,9 @@ Board::Board(Color* color) {
 	else
 		_color = color;
 	_position = Vector2Int::Zero();
+
+
+	
 }
 
 bool Board::IsFullHits()

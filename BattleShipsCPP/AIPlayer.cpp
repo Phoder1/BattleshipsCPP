@@ -18,12 +18,10 @@ AIPlayer* AIPlayer::CreateAIPlayer()
 	AIPlayer* pAIPlayer = new AIPlayer(PossibleNames[nameIndex]);
 	return pAIPlayer;
 }
-Board<BoardNode>* AIPlayer::GetBoard() {
-	return (Board<BoardNode>*)_board;
-}
+
 AIPlayer::AIPlayer(string name) : GamePlayer::GamePlayer(name)
 {
-	_board = new Board<BoardNode>();
+	_board = new Board();
 
 }
 void AIPlayer::SetColor(Color* color)
