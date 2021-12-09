@@ -4,6 +4,9 @@
 #include "Types.h"
 #include "Board.h"
 
+//#include "AIBrain.h"
+
+
 using namespace std;
 
 class GamePlayer
@@ -34,7 +37,7 @@ public:
 	virtual void ConfirmEndTurn() = 0;
 	virtual void SetColor(Color* color);
 	virtual void Reset();
-
+	virtual void SetOpponent(GamePlayer* opponent);
 	void Hit(Vector2Int position);
 	bool IsOpponentAI();
 	bool IsOpponentHuman();
@@ -73,27 +76,23 @@ public:
 	void GamePlayer::ConfirmStartTurn() override;
 	void GamePlayer::ConfirmEndTurn() override;
 	void Reset() override;
-
 	static HumanPlayer* CreateHumanPlayer();
 
 
 	~HumanPlayer();
 };
-
+class AIBrain;
 class AIPlayer : public GamePlayer
 {
+private:
 	static const int PossibleNamesCount;
 	static const string PossibleNames[];
-	//Board<WeightBoardNode>* _board;
 	Board<BoardNode>* _board;
 	
+	 AIBrain* _pAIBrain;
 public:
 	using GamePlayer::GamePlayer;
-
-	AIPlayer(string name) : GamePlayer(name) {
-		//_board = new Board<WeightBoardNode>();
-		_board = new Board<BoardNode>();
-	}
+	AIPlayer(string name);
 
 	Board<BoardNode>* GamePlayer::GetBoard() override;
 	void GamePlayer::FillBattleshipsBoard() override;
@@ -102,11 +101,11 @@ public:
 	void GamePlayer::ConfirmStartTurn() override;
 	void GamePlayer::ConfirmEndTurn() override;
 	void Reset() override;
-
+	void SetOpponent(GamePlayer* p) override;
+	
 	void DrawWeights();
 	static AIPlayer* CreateAIPlayer();
 
 
 	~AIPlayer();
 };
-

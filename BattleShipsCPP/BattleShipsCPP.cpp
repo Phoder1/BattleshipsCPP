@@ -19,8 +19,8 @@ int main()
 	//So make sure to delete them
 	
 	//Player 1
-	GamePlayer* player1 = HumanPlayer::CreateHumanPlayer();
-	//GamePlayer* player1 = AIPlayer::CreateAIPlayer();
+	//GamePlayer* player1 = HumanPlayer::CreateHumanPlayer();
+	GamePlayer* player1 = AIPlayer::CreateAIPlayer();
 	Color* player1Color = new Color(Color::BlueIndex);
 	player1->SetColor(player1Color);
 

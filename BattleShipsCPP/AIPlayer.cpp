@@ -3,7 +3,8 @@
 #include "Types.h"
 #include "Utillities.h"
 #include "GamePlayer.h"
-
+#include "AIBrain.h"	
+class AIBrain;
 using namespace std;
 
 const int AIPlayer::PossibleNamesCount = 3;
@@ -19,6 +20,11 @@ AIPlayer* AIPlayer::CreateAIPlayer()
 }
 Board<BoardNode>* AIPlayer::GetBoard() {
 	return (Board<BoardNode>*)_board;
+}
+AIPlayer::AIPlayer(string name) : GamePlayer::GamePlayer(name)
+{
+	_board = new Board<BoardNode>();
+
 }
 void AIPlayer::SetColor(Color* color)
 {
@@ -41,6 +47,13 @@ void AIPlayer::Reset()
 {
 	GamePlayer::Reset();
 	_board->Reset();
+}
+void AIPlayer::SetOpponent(GamePlayer* p)
+{
+
+		GamePlayer::SetOpponent(p);
+		_pAIBrain = new AIBrain(this);
+		
 }
 void AIPlayer::FillBattleshipsBoard() {
 	//Randomly place ships
@@ -97,31 +110,29 @@ void AIPlayer::FillBattleshipsBoard() {
 				}
 			}
 		}
-	
 
-	//_board->DrawBoard(true, false);
+	_pAIBrain->ResetWeightBoard();
 }
 void AIPlayer::PlayTurn() {
-	//Hit other player
 
-	//refrence to other player
-	//_opponent->Hit() <- hit a point on the board
-	//_opponent->GetBoard()->GetHit() <- check if this poiunt is already marked as hit
-	
-	
-
-	//Refrence to other player's board
-	//_opponent->GetBoard();
+	_pAIBrain->Play();
 }
+
 void AIPlayer::ConfirmStartTurn() {
 	//Keep empty because AI was born ready
 }
 void AIPlayer::ConfirmEndTurn() {
 	//Keep empty because AI was born ready
+	if (typeid(*_opponent) == typeid(AIPlayer))
+	{
+		_board->DrawBoard(true, true);
+		Input::Pause();
+	}
 }
 
 
 AIPlayer::~AIPlayer()
 {
+	delete(_pAIBrain);
 	delete(_board);
 }

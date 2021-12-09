@@ -38,7 +38,7 @@ void GamePlayer::StartGame(GamePlayer* opponent)
 
 	Reset();
 
-	_opponent = opponent;
+	SetOpponent( opponent);
 
 	FillBattleshipsBoard();
 }
@@ -60,6 +60,11 @@ void GamePlayer::Reset()
 {
 	ResetHP();
 	//GetBoard()->Reset();
+}
+
+void GamePlayer::SetOpponent(GamePlayer* opponent)
+{
+	_opponent = opponent;
 }
 
 void GamePlayer::Hit(Vector2Int position)
